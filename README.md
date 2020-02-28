@@ -1,2 +1,2 @@
-# coco.github.io
+# coco
 A College Project
