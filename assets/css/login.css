@@ -34,3 +34,9 @@ h1 {
     font-family: 'Roboto', sans-serif;
     padding: 10px 80px;
 }
+
+footer {
+    font-size: 12pt;
+    text-align: center;
+    color: rgb(173, 173, 173);
+}
