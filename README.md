@@ -1,2 +1,2 @@
-# coco
+# Latus
 A College Project
