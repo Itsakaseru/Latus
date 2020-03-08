@@ -5,7 +5,7 @@ html, body {
     height: 100%;
 }
 
-body#home {
+body#login {
     background: rgb(126,107,196);
     background: linear-gradient(49deg, rgba(126,107,196,1) 0%, rgba(199,158,207,1) 39%, rgba(214,200,255,1) 61%, rgba(254,240,255,1) 86%, rgba(253,253,255,1) 100%);
 }
@@ -14,17 +14,18 @@ body#home {
     border-radius: 15px;
 }
 
-h1 {
-    font-family: 'Roboto', sans-serif;
-}
-
 #inputField {
     background-color: #F3F3F3;
+    color: black;
     border: 0;
     font-family: 'Arial';
     font-size: 12pt;
     padding: 25px 20px;
     text-align: center;
+}
+
+#inputField::-webkit-input-placeholder {
+    color: #ACACAC;
 }
 
 #loginBtn {
