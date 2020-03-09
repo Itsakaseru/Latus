@@ -10,46 +10,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
         // login directly when local token is present
+        $(document).ready(function() {
+            if(localStorage.getItem("token") != '') {
+                $('#start').html("
+                    <?php
+                        include "view/landing.php";
+                    ?>
+                ");
+            }
+            else {
+                $('#start').html("
+                    <?php
+                        include "view/feed.php";
+                    ?>
+                ");
+            }
+        });
     </script>
 </head>
 
 <body id="start">
-    <div class="jumbotron vertical-center mb-0">
-        <div class="container">
-            <div class="row d-flex align-items-center justify-content-center">
-                <div class="logoContainer col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/web/logo.svg" width="350px">
-                </div>
-                <div class="information col-6">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <h1 class="mb-0">Latus</h1>
-                            <h5 class="pb-2">Social media made simple.</h5>
-                        </div>
-                        <div class="col-12">
-                            <div class="col-10 mx-auto">
-                                <hr>
-                            </div>
-                        </div>
-                        <div class="col-12 mt-4">
-                            <form method="post">
-                                <div class="form-group text-center">
-                                    <button id="loginBtn" name="login" type="submit" class="btn mb-2">Login</button>
-                                </div>
 
-                                <div class="form-group text-center">
-                                    <button id="registerBtn" name="register" type="submit" class="btn">Register</button>
-                                </div>
-                            </form>
-                            <div class="col-12 text-center pt-2">
-                                <footer class="mt-4">LATUS &copy;2020</footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>
