@@ -12,6 +12,12 @@
     }
 }
 
+@media only screen and (max-height:768px) {
+    html, body {
+        height: auto;
+    }
+}
+
 body#register {
     background-size: cover;
     background: rgb(126,107,196);
