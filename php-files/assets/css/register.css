@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+/* Desktop */
+@media only screen and (min-width: 768px) {
+    html, body {
+        height: 100%;
+    }
+
+    footer {
+        margin-top: 100px;
+    }
+}
+
+@media only screen and (max-height:768px) {
+    html, body {
+        height: auto;
+    }
+}
+
+body#register {
+    background-size: cover;
+    background: rgb(126,107,196);
+    background: linear-gradient(49deg, rgba(126,107,196,1) 0%, rgba(199,158,207,1) 39%, rgba(214,200,255,1) 61%, rgba(254,240,255,1) 86%, rgba(253,253,255,1) 100%);
+}
+
+.card {
+    border-radius: 15px;
+    height: 54rem;
+}
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    color: #ACACAC;
+}
+
+#inputField {
+    background-color: #F3F3F3;
+    border: 0;
+    font-family: 'Arial';
+    font-size: 12pt;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+#dateField {
+    background-color: #F3F3F3;
+    border: 0;
+    font-family: 'Arial';
+    font-size: 12pt;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+
+#genderField {
+    background-color: #F3F3F3;
+    border: 0;
+    font-family: 'Arial';
+    font-size: 12pt;
+    padding: 12px 20px;
+    text-align: center;
+}
+
+#genderField .text {
+    color: black;
+}
+
+#inputField::-webkit-input-placeholder {
+    color: #ACACAC;
+}
+
+input[type="date"]::-webkit-inner-spin-button,    
+input[type="date"]::-webkit-clear-button { display: none; }
+
+#registerBtn {
+    background-color: #7E6BC4;
+    border-radius: 250px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 80px;
+}
+
+#loginForm label {
+    color: #ACACAC;
+}
+
+footer {
+    font-size: 12pt;
+    text-align: center;
+    color: rgb(173, 173, 173);
+}

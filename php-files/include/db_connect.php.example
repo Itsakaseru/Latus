@@ -1,0 +1,8 @@
+<?php
+    $host = "fdb21.atspace.me";
+    $username = "3336533_latus";
+    $dbname = "3336533_latus";
+    $password = ""; // the password here
+
+    $db = new mysqli($host, $username, $password, $dbname);
+?>
