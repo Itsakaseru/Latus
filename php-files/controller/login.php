@@ -22,7 +22,8 @@
             $token = hash("sha256", rndStr(5));
             $query = "UPDATE user SET token='$token' WHERE email='$username'";
 
-            if($db->query($query)) echo $token;
+            // fetch from other pages using latus-token cookie
+            if($db->query($query)) setcookie("latus-token", $token);
             else echo "queryError";
         }
         else echo "passError";

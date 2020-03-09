@@ -9,28 +9,20 @@
     <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        // login directly when local token is present
-        $(document).ready(function() {
-            if(localStorage.getItem("token") != '') {
-                $('#start').html("
-                    <?php
-                        include "view/landing.php";
-                    ?>
-                ");
-            }
-            else {
-                $('#start').html("
-                    <?php
-                        include "view/feed.php";
-                    ?>
-                ");
-            }
-        });
     </script>
 </head>
 
 <body id="start">
-
+    <?php
+        if(!isset($_COOKIE["user"])) {
+            include "../view/landing.php";
+        }
+        else {
+            if($_COOKIE["user"] == "admin") {
+                include "../view/feed.php"; // change to other page as needed
+            }
+        }
+    ?>
 </body>
 
 </html>
