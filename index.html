@@ -1,26 +1,25 @@
 <!-- 
-    If not logged in {
-        include start page
+    <?php
+    if(!isset($_COOKIE["user"])) {
+        include "login.php";
+    } else {
+        if($_COOKIE["user"] == "admin") {
+            include "profile.php";
+        }
     }
+?>
 
-    If logged in {
-        include profile page
-    }
+## SET COOKIE
+<?php
+    setcookie("user", "admin", time() + (86400 * 30), "/"); // 86400 = 1 day
+    echo "Cookie set!";
+?>
+
+
+## REMOVE COOKIE
+<?php
+    // set the expiration date to one hour ago
+    setcookie('user', '', time()-60*60*24*90, '/', '', 0, 0);
+    unset($_COOKIE['Username']);
+?>
  -->
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Latus</title>
-    <link rel="stylesheet" href="assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/main.css?ver=1.0.0">
-    <script src="assets/jquery-3.4.1.js"></script>
-    <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body id="index">
-    none.
-</body>
-
-</html>
