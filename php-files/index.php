@@ -18,8 +18,30 @@
             include "../view/landing.php";
         }
         else {
-            if($_COOKIE["user"] == "admin") {
-                include "../view/profile.php"; // change to other page as needed
+            include "../controller/db_connect.php";
+
+            $query = "SELECT * FROM users";
+            $result = $db->query($query);
+
+            if(mysqli_num_rows($result) == 0) {
+                // well, users must not be zero anyway, thus show this message.
+                echo "<p>You're the first user... or hacked our database to delete all our data. Good job.</p>";
+                include "../view/landing.php";
+            }
+            else {
+                $found = 0;
+                while($row = $result->fetch_assoc()) {
+                    if($row['token'] == $_COOKIE['latus-token']) {
+                        // break and include profile page
+                        $found = 1;
+                        include "../view/profile.php";
+                        break;
+                    }
+                }
+
+                if($found == 0) {
+                    include "../view/landing.php";
+                }
             }
         }
     ?>
