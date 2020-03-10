@@ -19,7 +19,7 @@
         }
         else {
             if($_COOKIE["user"] == "admin") {
-                include "../view/feed.php"; // change to other page as needed
+                include "../view/profile.php"; // change to other page as needed
             }
         }
     ?>
