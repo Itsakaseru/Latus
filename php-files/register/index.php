@@ -16,6 +16,7 @@
         function registerUser() {
             // hide every messages
             $('#fieldsErr').hide();
+            $('#retypeErr').hide();
             $('#queryErr').hide();
             $('#phpErr').hide();
 
@@ -32,6 +33,30 @@
                 // form verification
                 if(password == retype) {
                     // post to controller
+                    $.ajax({
+                        url: "../controller/register.php",
+                        method: "POST",
+                        data: {
+                            fname: fname,
+                            lname: lname,
+                            email: email,
+                            password: password,
+                            birthDate: birthDate,
+                            gender: gender
+                        },
+                        success: function(data) {
+                            if(data == "true") {
+                                // post register if needed
+                                window.location.href = "..";
+                            }
+                            else {
+                                // other outputted data operations
+                            }
+                        },
+                        error: function() {
+                            $('#phpErr').show(); // show phpErr element
+                        }
+                    });
                 }
                 else {
                     $('#retypeErr').show(); // show retypeErr element
