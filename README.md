@@ -1,2 +1,2 @@
 # Latus
-A College Project
+A College Project With PHP
