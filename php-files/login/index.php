@@ -13,7 +13,7 @@
             return false;
         });
 
-        function login() {
+        function loginUser() {
             var username = $('#username').val();
             var pw = $('#password').val();
             if(username != '' && pw != '') {
@@ -26,6 +26,7 @@
                     },
                     success: function(data) {
                         if(data == "userError") {
+                            console.log(data);
                             $('#userErr').show();
                         }
                         else if(data == "passError") {
@@ -34,9 +35,12 @@
                         else if(data == "queryError") {
                             $('queryErr').show();
                         }
-                        else {
+                        else if(data == "true") {
                             localStorage.setItem("token", data);
-                            window.location.href = "../feed";
+                            window.location.href = "..";
+                        }
+                        else {
+                            console.log(data);
                         }
                     },
                     error: function() {
@@ -57,7 +61,7 @@
                         <img class="img-fluid" src="../assets/img/web/logo.svg" alt="Latus Logo" width="120px;">
                     </div>
                     <div class="row justify-content-center" style="margin-top: 3rem;">
-                        <form id="loginForm" method="post">
+                        <form id="loginForm">
                             <p id="userErr" style="color: #ff0000; display: none;">Email not found.</p>
                             <p id="pwErr" style="color: #ff0000; display: none;">Wrong password.</p>
                             <p id="queryErr" style="color: #ff0000; display: none;">Query error occured.</p>
@@ -70,7 +74,7 @@
                             </div>
                             <br>
                             <div class="form-group text-center">
-                                <button id="loginBtn" name="login" type="submit" onclick="login()" class="btn">Login</button>
+                                <button id="loginBtn" name="login" type="button" onclick="loginUser()" class="btn">Login</button>
                             </div>
                         </form>
                     </div>

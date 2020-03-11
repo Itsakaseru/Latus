@@ -14,11 +14,11 @@
 
 <body id="start">
     <?php
-        if(!isset($_COOKIE["user"])) {
-            include "../view/landing.php";
+        if(!isset($_COOKIE["latus-token"])) {
+            include "view/landing.php";
         }
         else {
-            include "../controller/db_connect.php";
+            include "controller/db_connect.php";
 
             $query = "SELECT * FROM users";
             $result = $db->query($query);

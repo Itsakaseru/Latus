@@ -4,7 +4,7 @@
 
     $username; $password;
     if(isset($_POST['username'])) $username = $_POST['username'];
-    if(isset($_POST['password'])) $username = $_POST['password'];
+    if(isset($_POST['password'])) $password = $_POST['password'];
 
     $query = "SELECT * FROM user WHERE email='$username'";
     $result = $db->query($query);
@@ -15,7 +15,7 @@
     else {
         $user = $result->fetch_assoc();
         $salt = $user['salt'];
-        $hash = $user['password'];
+        $hash = $user['hash'];
 
         if(hash("sha256", $password . $salt) == $hash) {
             // set token, unknown whether will be used
@@ -23,7 +23,10 @@
             $query = "UPDATE user SET token='$token' WHERE email='$username'";
 
             // fetch from other pages using latus-token cookie
-            if($db->query($query)) setcookie("latus-token", $token);
+            if($db->query($query)) {
+                setcookie("latus-token", $token);
+                echo "true, " . $token;
+            }
             else echo "queryError";
         }
         else echo "passError";
