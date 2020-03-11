@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="assets/css/register.css?ver=1.0.0">
     <script src="assets/jquery-3.4.1.js"></script>
     <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+    <!-- captcha v2 code
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
+    <!-- captcha v3 code -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
         $('#registForm').submit(function(){
@@ -14,8 +18,11 @@
         });
 
         function registerUser() {
+            var verify = 0;
+
             // hide every messages
             $('#fieldsErr').hide();
+            $('#captchaFail').hide();
             $('#retypeErr').hide();
             $('#queryErr').hide();
             $('#phpErr').hide();
@@ -27,45 +34,68 @@
             var retype = $('#confirmPassword').val();
             var birthDate = $('#birthDate').val();
             var gender = $('#genderField').val();
+            var captchaBox = $('#recaptchaResponse').val();
 
             // alert(fname + ' ' + lname + ' ' + email + ' ' + password + ' ' + retype + ' ' + birthDate + ' ' + gender);
             if(fname != '' && lname != '' && email != '' && password != '' && birthDate != '' && genderField != 'null') {
-                // form verification
-                if(password == retype) {
-                    // post to controller
-                    $.ajax({
-                        url: "../controller/register.php",
-                        method: "POST",
-                        data: {
-                            fname: fname,
-                            lname: lname,
-                            email: email,
-                            password: password,
-                            birthDate: birthDate,
-                            gender: gender
-                        },
-                        success: function(data) {
-                            if(data == "true") {
-                                // post register if needed
-                                window.location.href = "..";
-                            }
-                            else {
-                                // other outputted data operations
-                            }
-                        },
-                        error: function() {
-                            $('#phpErr').show(); // show phpErr element
+                /* captcha v2 code
+                // captcha api request
+                $.ajax({
+                    url: "https://www.google.com/recaptcha/api/siteverify",
+                    method: "POST",
+                    data: {
+                        secret: "6LchWeAUAAAAANWS1bcwCwyM6z-TIiwxn6XCGahk",
+                        response: captchaBox
+                    },
+                    success: function(data) {
+                        var result = JSON.parse(data);
+                        if(result.success == true) {
+                            verify = 1;
                         }
-                    });
+                        else {
+                            $('#captchaErr').show();
+                        }
+                    }
+                }); */
+                if(captchaBox != '') {
+                    if(password == retype) {
+                        // post to controller
+                        $.ajax({
+                            url: "../controller/register.php",
+                            method: "POST",
+                            data: {
+                                fname: fname,
+                                lname: lname,
+                                email: email,
+                                password: password,
+                                birthDate: birthDate,
+                                gender: gender,
+                                captchaBox: captchaBox
+                            },
+                            success: function(data) {
+                                if(data == "true") {
+                                    // post register if needed
+                                    window.location.href = "..";
+                                }
+                                else {
+                                    // other outputted data operations
+                                }
+                            },
+                            error: function() {
+                                $('#phpErr').show(); // show phpErr element
+                            }
+                        });
+                    }
+                    else {
+                        $('#retypeErr').show(); // show retypeErr element
+                    }
                 }
                 else {
-                    $('#retypeErr').show(); // show retypeErr element
+                    $('#captchaFail').show();
                 }
             }
             else {
-                if(fname == '' || lname == '' || email == '' || password == '' || birthDate == '' || genderField =='null') {
-                    $('#fieldsErr').show(); // show fieldsErr element
-                }
+                $('#fieldsErr').show(); // show fieldsErr element
             }
         }
     </script>
@@ -82,6 +112,7 @@
                     <div class="row justify-content-center" style="margin-top: 3rem;">
                         <form id="registForm" method="post">
                             <p id="fieldsErr" style="color: #ff0000; display: none;">All fields should not be empty.</p>
+                            <p id="captchaFail" style="color: #ff0000; display: none;">Could not load reCAPTCHA. Please try again.</p>
                             <p id="retypeErr" style="color: #ff0000; display: none;">Password confirmation error.</p>
                             <p id="queryErr" style="color: #ff0000; display: none;">Query error. Please contact administrator.</p>
                             <p id="phpErr" style="color: #ff0000; display: none;">An error occured. Please try again.</p>
@@ -113,6 +144,12 @@
                                     <option class="text" value="pnts">Prefer not to say</option>
                                 </select>
                             </div>
+                            <!-- captcha v2 code
+                            <div class="form-group">
+                                <div id="captchaBox" class="g-recaptcha" data-sitekey="6LchWeAUAAAAAOTVmEc-nL1i7Xrqsf51QpRq6oSS"></div>
+                            </div> -->
+                            <!-- used to retrieve token from captcha v3 -->
+                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             <br>
                             <div class="form-group text-center mt-md-4 mt-lg-1 mt-sm-4">
                                 <button id="registerBtn" name="register" type="submit" class="btn" onclick="registerUser()">Register</button>
@@ -146,5 +183,13 @@
             }
         })
     });
+
+    // captcha v3 code
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD', { action: 'registerUser' }).then(function (token) {
+            $('#recaptchaResponse').val(token); // enter token to hidden form input
+        });
+    });
+
 </script>
 </html>
