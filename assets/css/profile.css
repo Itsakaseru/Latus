@@ -103,6 +103,7 @@ header {
 
 #profileControl {
     font-size: 10pt;
+    cursor: pointer;
 }
 
 #profileControl a{
@@ -118,7 +119,7 @@ header {
 
 #profileControl a:hover{
     text-decoration: none;
-    color: #2e2e2e;
+    color: rgb(124, 124, 124);
 }
 
 textarea {
@@ -147,5 +148,23 @@ textarea::placeholder {
 .comment {
     background-color: #F3F3F3;
     border-radius: 8px;
+    padding: 10px 20px;
+
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+    /* Non standard for webkit */
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+.commentBtn {
+    color: #FFFFFF;
+    background-color: #7E6BC4;
+    border-radius: 8px;
+    border: 0;
     padding: 10px 20px;
 }

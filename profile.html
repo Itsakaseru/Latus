@@ -8,6 +8,7 @@
     <script src="assets/jquery-3.4.1.js"></script>
     <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a81849e810.js"></script>
+    <script src="assets/autosize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -73,7 +74,7 @@
                             727 total posts
                         </div>
                         <div id="profileControl" class="row justify-content-center mt-4">
-                            <a href="#"><i class="fas fa-edit"></i> edit profile</a>
+                            <a data-toggle="modal" data-target="#changePicture"><i class="fas fa-edit"></i> edit profile</a>
                         </div>
                     </div>
                 </div>
@@ -81,7 +82,7 @@
             <div class="col">
 
                 <div class="row mb-md-4">
-                    <div class="card col pt-3 pb-3">
+                    <div class="card col-12 pt-3 pb-3">
                         <form id="createPost" class="col">
                             <div class="row">
                                 <textarea id="content" class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="me want post something..."></textarea>
@@ -102,7 +103,7 @@
 
                 <div class="row">
 
-                    <div class="containerPost card col pt-3 pb-3">
+                    <div class="containerPost card col-12 pt-3 pb-3">
                         <div class="row pl-3 d-flex">
                             <div class="col-9 align-self-start d-flex">
                                 <img class="profilePicture rounded-circle" src="assets/img/users/itsakaseru.png" width="50px;" style="border: 2px solid #7E6BC4">
@@ -118,16 +119,61 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="commentContainer row pl-3">
-                            <div class="col-9 align-self-start d-flex">
+                        <div class="commentContainer row pl-3 mb-3">
+                            <div class="col-1 align-self-start d-flex">
                                 <img class="profilePicture rounded-circle" src="assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
-                                <span class="comment ml-3 my-auto"><strong>Hans Adhitio</strong> Test</span>
+                            </div>
+                            <div class="col-11 d-flex">
+                                <span class="comment my-auto mr-3"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="commentContainer row pl-3 mb-3">
+                            <div class="col-1 align-self-start d-flex">
+                                <img class="profilePicture rounded-circle" src="assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
+                            </div>
+                            <div class="col-11 d-flex">
+                                <span class="comment my-auto mr-3"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
+                            </div>
+                        </div>
+
+                        <div class="postContainer">
+                            <form id="createPost" class="col">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <textarea class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="reply something..."></textarea>
+                                    </div>
+                                    <div class="col-2">
+                                        <button class="commentBtn float-right" name="postContent" type="button" class="btn">comment</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- End of containerPost -->
 
                 </div><!-- End of x-list post -->
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="changePicture" tabindex="-1" role="dialog" aria-labelledby="changePicture" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
@@ -144,18 +190,7 @@
         });
 
         // enable auto sizing
-        var textarea = document.querySelector('textarea');
-
-        textarea.addEventListener('keydown', autosize);
-                    
-        function autosize(){
-        var el = this;
-        setTimeout(function(){
-                el.style.cssText = 'height:auto; padding:0';
-                el.style.cssText = '-moz-box-sizing:content-box';
-                el.style.cssText = 'height:' + el.scrollHeight + 'px';
-            },0);
-        }
+        autosize($('textarea'));
     });
 </script>
 
