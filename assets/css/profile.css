@@ -70,3 +70,38 @@ header {
 #accImg {
     border-radius: 5px;
 }
+
+.inputField input{
+    width: 100%;
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
+}
+
+#postBtn {
+    color: #FFFFFF;
+    background-color: #7E6BC4;
+    border-radius: 8px;
+    border: 0;
+    padding: 7px 20px;
+}
+
+#imgBtn {
+    background-color: #F3F3F3 !important;
+}
+
+textarea {
+    background-color: #F3F3F3 !important;
+    border-radius: 8px !important;
+    resize: none;
+    border: 0 !important;
+    overflow: hidden;
+    padding: 10px 15px !important;
+}
+
+textarea::placeholder {
+    color: #B7B7B7 !important;
+    font-style: italic;
+}

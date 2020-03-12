@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/profile.css?ver=1.0.0">
     <script src="assets/jquery-3.4.1.js"></script>
     <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a81849e810.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -41,7 +42,7 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a>Itsakaseru &nbsp;</a>
-                            <img id="accImg" src="assets/img/users/itsakaseru.png" alt="itsakaseru" width="30px">
+                            <img id="accImg" src="assets/img/users/itsakaseru.png" alt=0"itsakaseru" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button class="dropdown-item" type="button">Profile</button>
@@ -55,13 +56,13 @@
     </nav>
     <div class="container pt-5">
         <div class="row">
-            <div class="col-3">
+            <div class="col-3 mr-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <img id="profilePicture" class="rounded-circle" src="assets/img/users/itsakaseru.png" width="160px;" style="border-radius: ">
                         </div>
-                        <div class="row justify-content-center">
+                        <div id="" class="row justify-content-center mt-3">
                             Remueru Itsakaseru
                         </div>
                         <hr>
@@ -72,19 +73,37 @@
                             xxx posts
                         </div>
                         <div class="row justify-content-center">
-                            <p>Pencil icon: <span class="glyphicon glyphicon-pencil"></span></p>
+                            <p><i class="fas fa-edit"></i> edit profile</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col">
+
                 <div class="row">
-                    <div class="card">
-                        <div class="card-body">
-                            test
-                        </div>
+                    <div class="card col pt-3 pb-3">
+                        <form id="createPost" class="col">
+                            <div class="row">
+                                <textarea id="content" class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="me want post something..."></textarea>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col p-0">
+                                    <button id="imgBtn" name="postContent" type="button" class="btn"><i class="fas fa-file-image"></i></button>  
+                                </div>
+                                <div class="col p-0">
+                                    <button id="postBtn" class="float-right" name="postContent" type="button" class="btn">post</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
+
+                    
+                </div><!-- End of new post-->
+
+                <div class="row">
+
+                </div><!-- End of x-list post -->
+
             </div>
         </div>
     </div>
