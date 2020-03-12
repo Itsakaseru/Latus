@@ -18,13 +18,13 @@
     $cekmail = "SELECT * FROM user WHERE email='$email'";
     $result = $db -> query($cekmail);
 
-
     if(mysqli_num_rows($result) > 0){
         echo 'userError';
 	}
     else{
-        $token = hash("sha256", rndStr(5));
-        $query = "INSERT INTO user (firstName, lastName, email, hash, salt, birthDate, gender, token) VALUES ('$fname', '$lname', '$email', '$hash', '$salt', '$birthDate', '$gender', '$token');";
+        // $token = hash("sha256", rndStr(5));
+        // $query = "INSERT INTO user (firstName, lastName, email, hash, salt, birthDate, gender, token) VALUES ('$fname', '$lname', '$email', '$hash', '$salt', '$birthDate', '$gender', '$token');";
+        $query = "INSERT INTO user (firstName, lastName, email, hash, salt, birthDate, gender) VALUES ('$fname', '$lname', '$email', '$hash', '$salt', '$birthDate', '$gender');";
 
         if($db -> query($query)) {
             echo 'true';
