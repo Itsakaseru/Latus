@@ -19,7 +19,7 @@
     <?php
         include "include/db_connect.php";
 
-        $query = "SELECT * FROM users";
+        $query = "SELECT * FROM user";
         $result = $db->query($query);
         $found = 0;
 
@@ -51,10 +51,10 @@
         }
 
         if($found == 1) {
-            include "../view/profile.php";
+            include "view/profile.php";
         }
         else if($found == 0) {
-            include "../view/landing.php";
+            include "view/landing.php";
         }
     ?>
 </body>
