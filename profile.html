@@ -43,7 +43,7 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a>Itsakaseru &nbsp;</a>
-                            <img id="accImg" src="assets/img/users/itsakaseru.png" alt=0"itsakaseru" width="30px">
+                            <img id="accImg" src="assets/img/users/itsakaseru.png" alt="itsakaseru" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button class="dropdown-item" type="button">Profile</button>
@@ -56,12 +56,27 @@
         </div>
     </nav>
     <div class="container pt-5">
+
+        <div id="alertContainer" class="row mb-4" style="display: none;">
+            <div class="col">
+                <div id="successChangePicture" class="alert alert-success" role="alert" style="display: none;">
+                    Profile picture changed successfull.
+                </div>
+                <div id="successChangeInfo" class="alert alert-success" role="alert" style="display: none;">
+                    Profile updated.
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div id="profileInfo" class="col-3 mr-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row justify-content-center">
+                        <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
                             <img id="profilePicture" class="rounded-circle" src="assets/img/users/itsakaseru.png" width="160px;" style="border: 5px solid #7E6BC4; border-style: outset;">
+                            <div class="middle">
+                                <div class="text">Change Picture</div>
+                            </div>
                         </div>
                         <div id="profileName" class="row justify-content-center mt-3 pl-3 pr-3" style="text-align: center;">
                             Remueru Itsakaseru
@@ -74,7 +89,7 @@
                             727 total posts
                         </div>
                         <div id="profileControl" class="row justify-content-center mt-4">
-                            <a data-toggle="modal" data-target="#changePicture"><i class="fas fa-edit"></i> edit profile</a>
+                            <a><i class="fas fa-edit"></i> edit profile</a>
                         </div>
                     </div>
                 </div>
@@ -137,8 +152,8 @@
                             </div>
                         </div>
 
-                        <div class="postContainer">
-                            <form id="createPost" class="col">
+                        <div class="replayContainer">
+                            <form class="col">
                                 <div class="row">
                                     <div class="col-10">
                                         <textarea class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="reply something..."></textarea>
@@ -154,19 +169,13 @@
                 </div><!-- End of x-list post -->
 
             </div>
-        </div>
+        </div><!-- End of contents-->
     </div>
 
-    <!-- Modal -->
+    <!-- Change Picture Modal -->
     <div class="modal fade" id="changePicture" tabindex="-1" role="dialog" aria-labelledby="changePicture" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <div class="modal-body">
                     ...
                 </div>
@@ -177,6 +186,7 @@
             </div>
         </div>
     </div>
+
 </body>
 <script>
     $(document).ready(function() {
