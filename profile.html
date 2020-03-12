@@ -56,31 +56,31 @@
     </nav>
     <div class="container pt-5">
         <div class="row">
-            <div class="col-3 mr-md-4">
+            <div id="profileInfo" class="col-3 mr-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <img id="profilePicture" class="rounded-circle" src="assets/img/users/itsakaseru.png" width="160px;" style="border-radius: ">
+                            <img id="profilePicture" class="rounded-circle" src="assets/img/users/itsakaseru.png" width="160px;" style="border: 5px solid #7E6BC4; border-style: outset;">
                         </div>
-                        <div id="" class="row justify-content-center mt-3">
+                        <div id="profileName" class="row justify-content-center mt-3 pl-3 pr-3" style="text-align: center;">
                             Remueru Itsakaseru
                         </div>
-                        <hr>
-                        <div class="row justify-content-center">
-                            mm-dd-yyyy
+                        <hr style="border: 1px solid #B1B1B1">
+                        <div class="profileDetail row justify-content-center">
+                            20 years old
                         </div>
-                        <div class="row justify-content-center">
-                            xxx posts
+                        <div class="profileDetail row justify-content-center">
+                            727 total posts
                         </div>
-                        <div class="row justify-content-center">
-                            <p><i class="fas fa-edit"></i> edit profile</p>
+                        <div id="profileControl" class="row justify-content-center mt-4">
+                            <a href="#"><i class="fas fa-edit"></i> edit profile</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col">
 
-                <div class="row">
+                <div class="row mb-md-4">
                     <div class="card col pt-3 pb-3">
                         <form id="createPost" class="col">
                             <div class="row">
@@ -101,6 +101,30 @@
                 </div><!-- End of new post-->
 
                 <div class="row">
+
+                    <div class="containerPost card col pt-3 pb-3">
+                        <div class="row pl-3 d-flex">
+                            <div class="col-9 align-self-start d-flex">
+                                <img class="profilePicture rounded-circle" src="assets/img/users/itsakaseru.png" width="50px;" style="border: 2px solid #7E6BC4">
+                                <span class="postName ml-3 my-auto">Remueru Itsakaseru</span>
+                            </div>
+                            <div class="col-3 my-auto d-flex">
+                                <span class="ml-auto mr-3">Apr, 14 2020</span>
+                            </div>
+                        </div>
+                        <div class="row pl-3 pt-3">
+                            <div class="col">
+                                KOKO DA YO~
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="commentContainer row pl-3">
+                            <div class="col-9 align-self-start d-flex">
+                                <img class="profilePicture rounded-circle" src="assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
+                                <span class="comment ml-3 my-auto"><strong>Hans Adhitio</strong> Test</span>
+                            </div>
+                        </div>
+                    </div>
 
                 </div><!-- End of x-list post -->
 

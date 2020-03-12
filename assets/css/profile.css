@@ -7,6 +7,7 @@ html {
 
 body {
     background-color: #F3F3F3;
+    font-family: 'Roboto', sans-serif;
 }
 
 header {
@@ -21,7 +22,6 @@ header {
 }
 
 .navbar {
-    font-family: 'Roboto', sans-serif;
     color: white;
     background-color: transparent;
     -webkit-transition: background-color 0.25s ease 0s;
@@ -77,6 +77,7 @@ header {
 
 .card {
     border-radius: 8px;
+    border: 0 !important;
     box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
 }
 
@@ -92,6 +93,34 @@ header {
     background-color: #F3F3F3 !important;
 }
 
+#profileName {
+    font-size: 15pt;
+}
+
+.profileDetail {
+    color: rgb(138, 138, 138);
+}
+
+#profileControl {
+    font-size: 10pt;
+}
+
+#profileControl a{
+    text-decoration: none;
+}
+
+#profileControl a:link,
+#profileControl a:visited,
+#profileControl a:active {
+    text-decoration: none;
+    color: #696969;
+}
+
+#profileControl a:hover{
+    text-decoration: none;
+    color: #2e2e2e;
+}
+
 textarea {
     background-color: #F3F3F3 !important;
     border-radius: 8px !important;
@@ -104,4 +133,19 @@ textarea {
 textarea::placeholder {
     color: #B7B7B7 !important;
     font-style: italic;
+}
+
+.postName {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15pt;
+}
+
+.containerPost hr {
+    border: 1px solid #DCDCDC;
+}
+
+.comment {
+    background-color: #F3F3F3;
+    border-radius: 8px;
+    padding: 10px 20px;
 }
