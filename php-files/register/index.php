@@ -78,7 +78,7 @@
                                     window.location.href = "..";
                                 }
                                 else {
-                                    // other outputted data operations
+                                    $('#queryErr').show();
                                 }
                             },
                             error: function() {
