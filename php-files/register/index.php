@@ -74,8 +74,10 @@
                             },
                             success: function(data) {
                                 if(data == "true") {
-                                    // post register if needed
-                                    window.location.href = "..";
+                                    $('#successMsg').show();
+                                    setTimeout(function(){
+                                        window.location.href = "../login";
+                                    }, 3000);
                                 }
                                 else {
                                     $('#queryErr').show();
@@ -111,6 +113,7 @@
                     </div>
                     <div class="row justify-content-center" style="margin-top: 3rem;">
                         <form id="registForm" method="post">
+                            <p id="successMsg" style="color: #0000aa; display: none;">Registration complete. Redirecting to login page.</p>
                             <p id="fieldsErr" style="color: #ff0000; display: none;">All fields should not be empty.</p>
                             <p id="captchaFail" style="color: #ff0000; display: none;">Could not load reCAPTCHA. Please try again.</p>
                             <p id="retypeErr" style="color: #ff0000; display: none;">Password confirmation error.</p>
