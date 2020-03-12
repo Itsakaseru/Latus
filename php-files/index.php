@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -14,8 +17,7 @@
 
 <body id="start">
     <?php
-        include "controller/db_connect.php";
-        session_start();
+        include "include/db_connect.php";
 
         $query = "SELECT * FROM users";
         $result = $db->query($query);
