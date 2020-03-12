@@ -24,8 +24,11 @@
 
             // fetch from other pages using latus-token cookie
             if($db->query($query)) {
-                setcookie("latus-token", $token);
-                echo "true, " . $token;
+                // expire in 30 days
+                $time = time() + (86400 * 30);
+                setcookie("latus-userid", $user['userId'], $time + (86400 * 30));
+                setcookie("latus-token", $token, $time + (86400 * 30));
+                echo "true";
             }
             else echo "queryError";
         }
