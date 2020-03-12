@@ -26,8 +26,8 @@
             if($db->query($query)) {
                 // expire in 30 days
                 $time = time() + (86400 * 30);
-                setcookie("latus-userid", $user['userId'], $time + (86400 * 30));
-                setcookie("latus-token", $token, $time + (86400 * 30));
+                setcookie("latus-userid", $user['userId'], $time);
+                setcookie("latus-token", $token, $time);
                 echo "true";
             }
             else echo "queryError";
