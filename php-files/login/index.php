@@ -50,6 +50,8 @@
                         }
                     },
                     error: function() {
+                        $('#cardContainer').css('height','35rem');
+                        $('#alertBox').show();
                         $('#phpErr').show();
                     }
                 });
