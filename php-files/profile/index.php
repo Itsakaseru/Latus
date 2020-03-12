@@ -58,7 +58,7 @@
     <div class="container pt-5">
 
         <div class="row">
-            <div id="profileInfo" class="col-3 mr-md-4">
+            <div id="profileInfo" class="col-lg-3 mr-lg-4 pb-md-5 p-md-0 mb-md-3 mb-5">
                 <div class="card">
                     <div class="card-body">
                         <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
@@ -83,10 +83,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-lg ml-3 mr-3">
 
-                <div class="row mb-md-4">
-                    <div class="card col-12 pt-3 pb-3">
+                <div class="row mb-md-4 mb-4">
+                    <div class="card col-lg-12 pt-3 pb-3">
                         <form id="createPost" class="col">
                             <div class="row">
                                 <textarea id="content" class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="me want post something..."></textarea>
@@ -107,13 +107,13 @@
 
                 <div class="row">
 
-                    <div class="containerPost card col-12 pt-3 pb-3">
+                    <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
                         <div class="row pl-3 d-flex">
-                            <div class="col-9 align-self-start d-flex">
+                            <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
                                 <img class="profilePicture rounded-circle" src="../assets/img/users/itsakaseru.png" width="50px;" style="border: 2px solid #7E6BC4">
-                                <span class="postName ml-3 my-auto">Remueru Itsakaseru</span>
+                                <span class="postName ml-md-3 my-auto">Remueru Itsakaseru</span>
                             </div>
-                            <div class="col-3 my-auto d-flex">
+                            <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
                                 <span class="ml-auto mr-3">Apr, 14 2020</span>
                             </div>
                         </div>
@@ -123,31 +123,31 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="commentContainer row pl-3 mb-3">
+                        <div class="commentContainer row pl-md-3 mb-3">
                             <div class="col-1 align-self-start d-flex">
                                 <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
                             </div>
-                            <div class="col-11 d-flex">
-                                <span class="comment my-auto mr-3"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
+                            <div class="col-11 d-flex pl-0 pl-md-3">
+                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
                             </div>
                         </div>
 
-                        <div class="commentContainer row pl-3 mb-3">
+                        <div class="commentContainer row pl-md-3 mb-3">
                             <div class="col-1 align-self-start d-flex">
                                 <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
                             </div>
-                            <div class="col-11 d-flex">
-                                <span class="comment my-auto mr-3"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
+                            <div class="col-11 d-flex pl-0 pl-md-3">
+                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
                             </div>
                         </div>
 
                         <div class="replayContainer">
-                            <form class="col">
+                            <form class="col-12">
                                 <div class="row">
-                                    <div class="col-10">
+                                    <div class="col-8 col-sm-9 col-md-10">
                                         <textarea class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="reply something..."></textarea>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-4 col-sm-3 col-md-2">
                                         <button class="commentBtn float-right" name="postContent" type="button" class="btn">comment</button>
                                     </div>
                                 </div>

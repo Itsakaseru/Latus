@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-html {
-    height: 150%;
-}
-
 body {
     background-color: #F3F3F3;
     font-family: 'Roboto', sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile: */
+    .profilePicture {
+        display: none;
+    }
 }
 
 header {
