@@ -2,21 +2,19 @@
     $captcha = $_POST['captchaBox'];
 
     // $recaptcha = json_decode(file_get_contents());
-    /*
     if (!function_exists('curl_init')){
         die('CURL is not installed!');
     }
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $captchaUrl);
+    curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z" . "&response=" . $captcha);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $output = curl_exec($ch);
     $result = json_decode($output);
     curl_close($ch);
     echo $result->score;
-    */
 
-    $recaptcha = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z"."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
-    $result = json_decode($recaptcha);
+    // $recaptcha = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z"."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+    // $result = json_decode($recaptcha);
 
     if($result->score >= 0.5) {
         include "../include/db_connect.php";
