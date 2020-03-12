@@ -3,10 +3,10 @@
 
 <head>
     <title>Latus</title>
-    <link rel="stylesheet" href="assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/register.css?ver=1.0.0">
-    <script src="assets/jquery-3.4.1.js"></script>
-    <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/register.css?ver=1.0.0">
+    <script src="../assets/jquery-3.4.1.js"></script>
+    <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <!-- captcha v2 code
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
     <!-- captcha v3 code -->
@@ -18,6 +18,7 @@
         });
 
         function registerUser() {
+            $('#registerBtn').attr('disabled', true);
             var verify = 0;
 
             // hide every messages
@@ -74,10 +75,14 @@
                             },
                             success: function(data) {
                                 if(data == "true") {
+                                    verify = 1;
                                     $('#successMsg').show();
                                     setTimeout(function(){
                                         window.location.href = "../login";
                                     }, 3000);
+                                }
+                                else if(data == "captchaErr") {
+                                    $('#captchaFail').show();
                                 }
                                 else {
                                     $('#queryErr').show();
@@ -98,6 +103,10 @@
             }
             else {
                 $('#fieldsErr').show(); // show fieldsErr element
+            }
+
+            if(verify == 0) {
+                $('#registerBtn').attr('disabled', false);
             }
         }
     </script>
@@ -155,7 +164,7 @@
                             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             <br>
                             <div class="form-group text-center mt-md-4 mt-lg-1 mt-sm-4">
-                                <button id="registerBtn" name="register" type="submit" class="btn" onclick="registerUser()">Register</button>
+                                <button id="registerBtn" name="register" type="button" class="btn" onclick="registerUser()">Register</button>
                             </div>
                         </form>
                     </div>

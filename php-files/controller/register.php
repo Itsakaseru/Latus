@@ -1,40 +1,63 @@
 <?php
-    include "../include/db_connect.php";
-    include "../include/randomstr.php";
+    $captcha = $_POST['captchaBox'];
 
-    $fname; $lname; $email; $password; $birthDate; $gender;
+    // $recaptcha = json_decode(file_get_contents());
+    /*
+    if (!function_exists('curl_init')){
+        die('CURL is not installed!');
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $captchaUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $output = curl_exec($ch);
+    $result = json_decode($output);
+    curl_close($ch);
+    echo $result->score;
+    */
 
-    if(isset($_POST['fname'])) $fname = $_POST['fname'];
-    if(isset($_POST['lname'])) $lname = $_POST['lname'];
-    if(isset($_POST['email'])) $email = $_POST['email'];
-    if(isset($_POST['password'])) $password = $_POST['password'];
-    if(isset($_POST['birthDate'])) $birthDate = $_POST['birthDate'];
-    if(isset($_POST['gender'])) $gender = $_POST['gender'];
+    $recaptcha = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z"."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+    $result = json_decode($recaptcha);
 
-    $salt = rndStr(5);
+    if($result->score >= 0.5) {
+        include "../include/db_connect.php";
+        include "../include/randomstr.php";
 
-    $hash = hash("sha256", $password . $salt);
+        $fname; $lname; $email; $password; $birthDate; $gender;
 
-    $cekmail = "SELECT * FROM user WHERE email='$email'";
-    $result = $db -> query($cekmail);
+        if(isset($_POST['fname'])) $fname = $_POST['fname'];
+        if(isset($_POST['lname'])) $lname = $_POST['lname'];
+        if(isset($_POST['email'])) $email = $_POST['email'];
+        if(isset($_POST['password'])) $password = $_POST['password'];
+        if(isset($_POST['birthDate'])) $birthDate = $_POST['birthDate'];
+        if(isset($_POST['gender'])) $gender = $_POST['gender'];
 
-    if(mysqli_num_rows($result) > 0){
-        echo 'userError';
-	}
-    else{
-        // $token = hash("sha256", rndStr(5));
-        // $query = "INSERT INTO user (firstName, lastName, email, hash, salt, birthDate, gender, token) VALUES ('$fname', '$lname', '$email', '$hash', '$salt', '$birthDate', '$gender', '$token');";
-        $query = "INSERT INTO user (firstName, lastName, email, hash, salt, birthDate, gender) VALUES ('$fname', '$lname', '$email', '$hash', '$salt', '$birthDate', '$gender');";
+        $salt = rndStr(5);
 
-        if($db -> query($query)) {
-            echo 'true';
-        }
-        else {
-            echo 'false';
-        }
-	}
+        $hash = hash("sha256", $password . $salt);
 
-    mysqli_free_result($result);
-    mysqli_close($db);
+        $cekmail = "SELECT * FROM user WHERE email='$email'";
+        $result = $db -> query($cekmail);
 
+        if(mysqli_num_rows($result) > 0){
+            echo 'userError';
+    	}
+        else{
+            // $token = hash("sha256", rndStr(5));
+            // $query = "INSERT INTO user (firstName, lastName, email, hash, salt, birthDate, gender, token) VALUES ('$fname', '$lname', '$email', '$hash', '$salt', '$birthDate', '$gender', '$token');";
+            $query = "INSERT INTO user (firstName, lastName, email, hash, salt, birthDate, gender) VALUES ('$fname', '$lname', '$email', '$hash', '$salt', '$birthDate', '$gender');";
+
+            if($db -> query($query)) {
+                echo 'true';
+            }
+            else {
+                echo 'false';
+            }
+    	}
+
+        mysqli_free_result($result);
+        mysqli_close($db);
+    }
+    else {
+        echo "captchaErr";
+    }
 ?>
