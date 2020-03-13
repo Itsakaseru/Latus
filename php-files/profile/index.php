@@ -96,7 +96,7 @@
     }
 </style>
 
-<body id="profile" userId="<?php echo $user->getUserId(); ?>">
+<body id="profile">
     <header data-toggle="modal" data-target="#changeCover" style="background-image: url('<?php echo $user->getCover(); ?>');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <a href="/" class="navbar-brand">
@@ -154,7 +154,7 @@
                             <?php echo $postCount ?> total posts
                         </div>
                         <div id="profileControl" class="row justify-content-center mt-4">
-                            <a><i class="fas fa-edit"></i> edit profile</a>
+                            <a data-toggle="modal" data-target="#editProfile"><i class="fas fa-edit"></i> edit profile</a>
                         </div>
                     </div>
                 </div>
@@ -280,6 +280,54 @@
         </div><!-- End of contents-->
     </div>
 
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="editProfile" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="updateProfile" method="post">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">First Name</label>
+                            <input id="firstName" type="text" class="form-control" placeholder="First Name" value="<?php echo $user->getFName(); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Last Name</label>
+                            <input id="lastName" type="text" class="form-control" placeholder="Last Name" value="<?php echo $user->getLName(); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Birthdate</label><br>
+                            <input id="birthDate" name="birthDate" placeholder="Choose a Date" type="date" value="<?php echo $user->getBirthDate(); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label><br>
+                            <select id="genderField" name="gender">
+                                <option class="text" value="null" style="color:#ACACAC;" disabled>Choose Gender</option>
+                                <option class="text" value="male">Male</option>
+                                <option class="text" value="female">Female</option>
+                                <option class="text" value="pnts">Prefer not to say</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Color Scheme</label><br>
+                            <select id="colorField" name="colorScheme">
+                                <option class="text" value="null" style="color:#ACACAC;" disabled>Choose Color</option>
+                                <option class="text" value="7E6BC4">Purple</option>
+                                <option class="text" value="F34C4C">Red</option>
+                                <option class="text" value="8BCF64">Green</option>
+                                <option class="text" value="6AB1EF">Blue</option>
+                                <option class="text" value="FC9F61">Orange</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="updateProfileBtn" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Change Picture Modal -->
     <div class="modal fade" id="changePicture" tabindex="-1" role="dialog" aria-labelledby="changePicture" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -333,13 +381,40 @@
         // enable auto sizing
         autosize($('textarea'));
 
+        // Update Profile
+        $('#updateProfileBtn').click(function() {
+            var fname = $('#firstName').val();
+            var lname = $('#lastName').val();
+            var bdate = $('#birthDate').val();
+            var gender = $('#genderField').val();
+            var color = $('#colorField').val();
+
+            $.ajax({
+                url: "../controller/updateProfile.php",
+                method: "POST",
+                data: {
+                    fname: fname,
+                    lname: lname,
+                    bdate: bdate,
+                    gender: gender,
+                    color: color
+                },
+                success: function(data){
+                    console.log(data);
+                    //refresh page if success
+                },
+                error: function() {
+                    alert("Something went wrong");
+                }
+            });
+        });
+
         // Create Post
         $('#postBtn').click(function() {
             var file_data = $('#imgFile').prop('files')[0]; 
             var form_data = new FormData();                  
             form_data.append('file', file_data);
             form_data.append('content', $("#content").val());
-            form_data.append('userId', $("body").attr('userid'));
             $.ajax({
                 url: '../controller/addPost.php',
                 dataType: 'text',
