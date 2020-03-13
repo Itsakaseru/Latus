@@ -17,7 +17,6 @@ header {
     height:10vh;
     min-height:400px;
     background-size:cover;
-    background-image: url('../img/web/cover-default.png');
     cursor: pointer;
 }
 

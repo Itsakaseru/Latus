@@ -21,7 +21,7 @@
 -->
 
 <body id="profile">
-    <header data-toggle="modal" data-target="#changeCover"></header>
+    <header data-toggle="modal" data-target="#changeCover" style="background-image: url('../assets/img/web/cover-default.png');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <a href="/" class="navbar-brand">
             <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
@@ -110,7 +110,7 @@
                     <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
                         <div class="row pl-3 d-flex">
                             <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
-                                <img class="profilePicture rounded-circle" src="../assets/img/users/itsakaseru.png" width="50px;" style="border: 2px solid #7E6BC4">
+                                <img class="profilePicture rounded-circle" src="../assets/img/users/itsakaseru.png" width="50px;" style="border: 2px solid <?php echo $theme?>">
                                 <span class="postName ml-md-3 my-auto">Remueru Itsakaseru</span>
                             </div>
                             <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
@@ -120,6 +120,11 @@
                         <div class="row pl-3 pt-3">
                             <div class="col">
                                 KOKO DA YO~
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 pl-3 pt-3">
+                                <img class="img-fluid" src="../assets/img/web/cover-default.png" style="display: show;">
                             </div>
                         </div>
                         <hr>
@@ -220,7 +225,7 @@
             var form_data = new FormData();
             form_data.append("file", file_data);
             $.ajax({
-                url: "controller/uploadPicture.php",
+                url: "../controller/uploadPicture.php",
                 dataType: 'script',
                 cache: false,
                 contentType: false,
@@ -245,7 +250,7 @@
             var form_data = new FormData();
             form_data.append("file", file_data);
             $.ajax({
-                url: "controller/uploadCover.php",
+                url: "../controller/uploadCover.php",
                 dataType: 'script',
                 cache: false,
                 contentType: false,
