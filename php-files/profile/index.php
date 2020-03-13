@@ -220,6 +220,7 @@
 
                         include '../include/db_connect.php';
                         include '../model/posts.php';
+                        include '../model/comments.php';
 
                         // Get user Posts
                         $query = "SELECT * from timeline WHERE userId = '" . $user->getUserId() . "';";
@@ -227,7 +228,6 @@
 
                         // array to hold data
                         $posts = array();
-                        $comments = array();
 
                         while($data = mysqli_fetch_assoc($result)) {
                             array_push($posts, new Post($data["userId"], $data["postId"], $data["contents"], $data["pic"], $data["timeStamp"]));
@@ -235,11 +235,30 @@
 
                         foreach($posts as $x) { ?>
 
+                            <?php 
+
+                                // Array to hold data
+                                $comments = array();
+                                
+                                // get Comments for user for each posts
+                                $query = "SELECT timeline.postId, comment.commenterId, user.userId, user.firstName, user.lastName, user.pic, comment.contents, comment.timeStamp
+                                          FROM user
+                                          INNER JOIN timeline
+                                          INNER JOIN comment ON user.userId = comment.userId AND timeline.postId = comment.postId
+                                          WHERE timeline.postId = '" . $x->getPostId() ."';";
+                                $result = $db->query($query);
+
+                                while($data = mysqli_fetch_assoc($result)) {
+                                    array_push($comments, new Comment($data["postId"], $data["commenterId"], $data["userId"], $data["firstName"], $data["lastName"], $data["pic"], $data["contents"], $data["timeStamp"]));
+                                }
+
+                            ?>
+
                             <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
                                 <div class="row pl-3 d-flex">
                                     <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
                                         <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>" width="50px;" style="border: 2px solid <?php echo $theme?>">
-                                        <span class="postName ml-md-3 my-auto"><?php echo $user->getFName() . " " . $user->getLName(); ?></span>
+                                        <span class="postName ml-md-3 my-auto"><strong><?php echo $user->getFName() . " " . $user->getLName(); ?></strong></span>
                                     </div>
                                     <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
                                         <span class="ml-auto mr-3"><?php echo getTimeAgo($x->getTime());?></span>
@@ -258,26 +277,18 @@
                                                 <img class="img-fluid" src="../assets/img/web/cover-default.png" style="display: show;">
                                             </div>
                                         </div>
+                                    <?php } ?>
                                         <hr>
+                                    <?php foreach($comments as $y) { ?>
                                         <div class="commentContainer row pl-md-3 mb-3">
                                             <div class="col-1 align-self-start d-flex">
-                                                <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
+                                                <img class="profilePicture rounded-circle" src="<?php echo $y->getPic(); ?>" width="50px;" style="border: 2px solid #<?php echo $user->getTheme();?>">
                                             </div>
                                             <div class="col-11 d-flex pl-0 pl-md-3">
-                                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
+                                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong><?php echo $y->getFName() . " " . $y->getLName();?></strong> <?php echo $y->getContent();?></span>
                                             </div>
                                         </div>
-
-                                        <div class="commentContainer row pl-md-3 mb-3">
-                                            <div class="col-1 align-self-start d-flex">
-                                                <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
-                                            </div>
-                                            <div class="col-11 d-flex pl-0 pl-md-3">
-                                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
-                                            </div>
-                                        </div>
-
-                                <?php } ?>
+                                    <?php } ?>
 
                                 <div class="replayContainer">
                                     <form class="col-12">
@@ -291,7 +302,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>';
+                            </div>
                             
                         <?php } ?>
 
