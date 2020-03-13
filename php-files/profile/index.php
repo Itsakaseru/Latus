@@ -54,71 +54,38 @@
     $dob = $user->getBirthDate();
     $age = date_diff(date_create($dob), date_create($today));
 
-    function getTimeAgo($timestamp) {  
+    function getTimeAgo($timestamp) { 
 
-        $time_ago = strtotime($timestamp);  
-        $current_time = time();  
-        $time_difference = $current_time - $time_ago;  
-        $seconds = $time_difference;  
-
-        $minutes      = round($seconds / 60 );
-        $hours           = round($seconds / 3600);
-        $days          = round($seconds / 86400);
-        $weeks          = round($seconds / 604800);
-        $months          = round($seconds / 2629440);
-        $years          = round($seconds / 31553280);
-
-        if($seconds <= 60) { "Just Now"; }  
-
-        else if($minutes <=60) { 
-            if($minutes==1) {  
-                return "one minute ago";  
-            }  
-            else {  
-            return "$minutes minutes ago";  
-            }  
+        date_default_timezone_set("Asia/Jakarta");
+        $timeAgo = strtotime($timestamp);
+        $diff = time() - $timeAgo; 
+        
+        if( $diff < 1 ) {  
+            return 'Just Now';  
         } 
-        else if($hours <=24) {
-            if($hours==1) {  
-                return "an hour ago";  
-            }  
-            else {  
-                return "$hours hrs ago";  
-            }  
-        }  
-        else if($days <= 7) {  
-            if($days==1) {  
-                return "yesterday";  
-            }  
-            else {  
-                return "$days days ago";  
-            }  
-        }  
-        else if($weeks <= 4.3) {  
-            if($weeks==1) {  
-                return "a week ago";  
-            }  
-            else {  
-                return "$weeks weeks ago";  
-            }  
-        }  
-        else if($months <=12) {  
-            if($months==1) {  
-                return "a month ago";  
-            }  
-            else {  
-                return "$months months ago";  
-            }  
-        }  
-        else {  
-            if($years==1) {  
-                return "one year ago";  
-            }  
-            else {  
-            return "$years years ago";  
-            }  
-        }
-    }  
+        
+        $time_rules = array (  
+                    12 * 30 * 24 * 60 * 60 => 'year', 
+                    30 * 24 * 60 * 60      => 'month', 
+                    24 * 60 * 60           => 'day', 
+                    60 * 60                => 'hour', 
+                    60                     => 'minute', 
+                    1                      => 'second'
+        ); 
+    
+        foreach( $time_rules as $secs => $str ) { 
+            
+            $div = $diff / $secs; 
+    
+            if( $div >= 1 ) { 
+                
+                $t = round( $div ); 
+                
+                return $t . ' ' . $str .  
+                    ( $t > 1 ? 's' : '' ) . ' ago'; 
+            } 
+        } 
+    }
 
 ?>
 <style>
@@ -129,7 +96,7 @@
     }
 </style>
 
-<body id="profile">
+<body id="profile" userId="<?php echo $user->getUserId(); ?>">
     <header data-toggle="modal" data-target="#changeCover" style="background-image: url('<?php echo $user->getCover(); ?>');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <a href="/" class="navbar-brand">
@@ -196,13 +163,14 @@
 
                 <div class="row mb-md-4 mb-4">
                     <div class="card col-lg-12 pt-3 pb-3">
-                        <form id="createPost" class="col">
+                        <form id="createPost" class="col" enctype="multipart/form-data">
                             <div class="row">
-                                <textarea id="content" class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="me want post something..."></textarea>
+                                <textarea id="content" type="text" class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="me want post something..."></textarea>
                             </div>
                             <div class="row mt-3">
                                 <div class="col p-0">
-                                    <button id="imgBtn" name="postContent" type="button" class="btn"><i class="fas fa-file-image"></i></button>  
+                                    <input id="imgFile" class="inputfile" name="imgContent" type="file" class="btn">
+                                </input>  
                                 </div>
                                 <div class="col p-0">
                                     <button id="postBtn" class="float-right" name="postContent" type="button" class="btn">post</button>
@@ -233,7 +201,7 @@
                             array_push($posts, new Post($data["userId"], $data["postId"], $data["contents"], $data["pic"], $data["timeStamp"]));
                         }
 
-                        foreach($posts as $x) { ?>
+                        foreach(array_reverse($posts) as $x) { ?>
 
                             <?php 
 
@@ -364,6 +332,30 @@
 
         // enable auto sizing
         autosize($('textarea'));
+
+        // Create Post
+        $('#postBtn').click(function() {
+            var file_data = $('#imgFile').prop('files')[0]; 
+            var form_data = new FormData();                  
+            form_data.append('file', file_data);
+            form_data.append('content', $("#content").val());
+            form_data.append('userId', $("body").attr('userid'));
+            $.ajax({
+                url: '../controller/addPost.php',
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,                         
+                type: 'post',
+                success: function(data){
+                    console.log(data);
+                },
+                error: function() {
+                    alert("Something went wrong");
+                }
+            });
+        });
 
         // Change Profile Picture AJAX
         $('#uploadPP').on('click', function() {
