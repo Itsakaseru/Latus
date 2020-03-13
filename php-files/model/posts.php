@@ -1,29 +1,27 @@
 <?php
-    class Post() {
+    class Post {
         private $_userId;
-        private $_firstName;
-        private $_lastName;
-        private $_timeStamp;
+        private $_postId;
         private $_contents;
+        private $_pic;
+        private $_timeStamp;
 
-        function __construct($id, $fname, $lname, $time, $contents) {
+        function __construct($id, $postId, $contents, $pic, $timeStamp) {
             $this->_userId = $id;
-            $this->_firstName = $fname;
-            $this->_lastName = $lname;
-            $this->_timeStamp = $time;
+            $this->_postId = $postId;
             $this->_contents = $contents;
+            $this->_pic = $pic;
+            $this->_timeStamp = $timeStamp;
+            
         }
 
-        public function setId(id) { $this->_userId = $id; }
-        public function setFName($fname) { $this->_firstName = $fname; }
-        public function setLName($lname) { $this->_lastName = $lname; }
-        public function setTime($time) { $this->_timeStamp = $time; }
+        public function setId($id) { $this->_userId = $id; }
         public function setContents($contents) { $this->_contents = $contents; }
 
         public function getId() { return $this->_id; }
-        public function getFName() { return $this->_firstName; }
-        public function getLName() { return $this->_lastName; }
-        public function getTime() { return $this->_timeStamp; }
+        public function getPostId() { return $this->_postId; }
         public function getContents() { return $this->_contents; }
+        public function getPic() { return $this->_pic; }
+        public function getTime() { return $this->_timeStamp; }
     }
 ?>
