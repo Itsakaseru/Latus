@@ -1,29 +1,32 @@
 <?php
-    class Comment() {
-        private $_userId;
+    class Comment {
         private $_postId;
         private $_commenterId;
-        private $_timeStamp;
+        private $_userId;
+        private $_firstName;
+        private $_lastName;
+        private $_pic;
         private $_contents;
+        private $_timeStamp;
 
-        function __construct($user, $post, $commenter, $time, $contents) {
-            $this->_userId = $user;
-            $this->_postId = $post;
-            $this->_commenterId = $commenter;
-            $this->_timeStamp = $time;
+        function __construct($postId, $commenterId, $userId, $firstName, $lastName, $pic, $contents, $timeStamp) {
+            $this->_postId = $postId;
+            $this->_commenterId = $commenterId;
+            $this->_userId = $userId;
+            $this->_firstName = $firstName;
+            $this->_lastName = $lastName;
+            $this->_pic = $pic;
             $this->_contents = $contents;
+            $this->_timeStamp = $timeStamp;
         }
 
-        public function setUserId($id) { $this->_userId = $id; }
-        public function setPostId($id) { $this->_postId = $id; }
-        public function setCommenterId($id) { $this->_commenterId = $id; }
-        public function setTime($time) { $this->_timeStamp = $time; }
-        public function setContents($contents) { $this->_contents = $contents; }
-
-        public function getUserId() { return $this->_userId; }
         public function getPostId() { return $this->_postId; }
         public function getCommenterId() { return $this->_commenterId; }
+        public function getUserId() { return $this->_userId; }
+        public function getFName() { return $this->_firstName; }
+        public function getLName() { return $this->_lastName; }
+        public function getPic() { return $this->_pic; }
+        public function getContent() { return $this->_contents; }
         public function getTime() { return $this->_timeStamp; }
-        public function getContents() { return $this->_contents; }
     }
 ?>
