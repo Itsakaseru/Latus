@@ -48,8 +48,8 @@
 				</thead>
 				<tbody>
 					<?php
-						include "../include/db_connect.php";
-						include "../model/student.php";
+						include "include/db_connect.php";
+						include "model/discover.php";
 
 						$list = array();
 
