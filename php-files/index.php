@@ -51,7 +51,7 @@
         }
 
         if($found == 1) {
-            include "view/profile.php";
+            include "view/discover.php";
         }
         else if($found == 0) {
             include "view/landing.php";
