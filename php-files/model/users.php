@@ -1,5 +1,5 @@
 <?php
-    class Comment() {
+    class User {
         private $_userId;
         private $_firstName;
         private $_lastName;
