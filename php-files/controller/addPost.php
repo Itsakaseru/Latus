@@ -6,11 +6,24 @@
         //--- if yes then set database image to link image location
         //--- if not then set database image to null
 
-        $userId = $_POST["userId"];
+        include "../include/db_connect.php";
+
+        // Get userID from token
+        $token = $_COOKIE["latus-token"];
+
+        $query = "SELECT userId FROM user WHERE token = '" . $token . "';";
+        $result = $db->query($query);
+
+        if(mysqli_num_rows($result) == 1) {
+            $data = $result->fetch_assoc();
+            $userId = $data["userId"];
+        } else {
+            echo "errFail";
+            exit();
+        }
+
         $contents = $_POST["content"];
         $img = "null";
-
-        include "../include/db_connect.php";
 
         $query = "INSERT INTO timeline (userId, contents, pic)
                   VALUES ('" . $userId . "', '" . $contents . "', '" . $img . "');";
