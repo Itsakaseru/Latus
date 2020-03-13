@@ -31,12 +31,6 @@ header {
     transition: background-color 0.25s ease 0s;
 }
 
-.solid {
-    background-color: #7E6BC4 !important;
-    -webkit-transition: background-color 0.25s ease 0s;
-    transition: background-color 0.25s ease 0s;
-}
-
 .navbar a:link,
 .navbar a:visited,
 .navbar a:active {

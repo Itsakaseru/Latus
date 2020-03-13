@@ -20,8 +20,117 @@
     users can choose pre-determined color to avoid conflict with font-color
 -->
 
+<?php
+
+    session_start();
+   
+    include "../include/db_connect.php"; 
+    include "../model/users.php";
+
+    $id; $token;
+
+    if(isset($_SESSION['latus-userid'])) $id=$_SESSION['latus-userid'];
+    if(isset($_SESSION['latus-token'])) $token=$_SESSION['latus-token'];
+
+    $query1 = "SELECT * FROM user WHERE token='$token'";
+    $result = $db -> query($query1);
+
+    $row = $result -> fetch_assoc(); 
+
+    $user = new User($row["userId"], $row["firstName"], $row["lastName"], $row["email"], $row["birthDate"], $row["gender"], $row["pic"], $row["cover"], $row["theme"]);
+
+    // Get user posts count
+    $query2 = "SELECT COUNT(*) AS 'postCount' from timeline WHERE userId = '" . $user->getUserId() . "';";
+    $countPost = $db -> query($query2);
+
+    $postCount = $countPost -> fetch_assoc();
+    $postCount = $postCount["postCount"];
+
+    mysqli_free_result($result);
+    mysqli_close($db);
+
+    //Calculate age
+    $today = date("Y-m-d");
+    $dob = $user->getBirthDate();
+    $age = date_diff(date_create($dob), date_create($today));
+
+    function getTimeAgo($timestamp) {  
+
+        $time_ago = strtotime($timestamp);  
+        $current_time = time();  
+        $time_difference = $current_time - $time_ago;  
+        $seconds = $time_difference;  
+
+        $minutes      = round($seconds / 60 );
+        $hours           = round($seconds / 3600);
+        $days          = round($seconds / 86400);
+        $weeks          = round($seconds / 604800);
+        $months          = round($seconds / 2629440);
+        $years          = round($seconds / 31553280);
+
+        if($seconds <= 60) { "Just Now"; }  
+
+        else if($minutes <=60) { 
+            if($minutes==1) {  
+                return "one minute ago";  
+            }  
+            else {  
+            return "$minutes minutes ago";  
+            }  
+        } 
+        else if($hours <=24) {
+            if($hours==1) {  
+                return "an hour ago";  
+            }  
+            else {  
+                return "$hours hrs ago";  
+            }  
+        }  
+        else if($days <= 7) {  
+            if($days==1) {  
+                return "yesterday";  
+            }  
+            else {  
+                return "$days days ago";  
+            }  
+        }  
+        else if($weeks <= 4.3) {  
+            if($weeks==1) {  
+                return "a week ago";  
+            }  
+            else {  
+                return "$weeks weeks ago";  
+            }  
+        }  
+        else if($months <=12) {  
+            if($months==1) {  
+                return "a month ago";  
+            }  
+            else {  
+                return "$months months ago";  
+            }  
+        }  
+        else {  
+            if($years==1) {  
+                return "one year ago";  
+            }  
+            else {  
+            return "$years years ago";  
+            }  
+        }
+    }  
+
+?>
+<style>
+    .solid {
+        background-color: #<?php echo $user->getTheme(); ?> !important;
+        -webkit-transition: background-color 0.25s ease 0s;
+        transition: background-color 0.25s ease 0s;
+    }
+</style>
+
 <body id="profile">
-    <header data-toggle="modal" data-target="#changeCover" style="background-image: url('../assets/img/web/cover-default.png');"></header>
+    <header data-toggle="modal" data-target="#changeCover" style="background-image: url('<?php echo $user->getCover(); ?>');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <a href="/" class="navbar-brand">
             <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
@@ -42,8 +151,8 @@
                 <li class="nav-item">
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <a>Itsakaseru &nbsp;</a>
-                            <img id="accImg" src="../assets/img/users/itsakaseru.png" alt="itsakaseru" width="30px">
+                            <a><?php echo $user->getFName() . " " . $user->getLName(); ?> &nbsp;</a>
+                            <img id="accImg" src="<?php echo $user->getPicture(); ?>" alt="itsakaseru" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button class="dropdown-item" type="button">Profile</button>
@@ -62,20 +171,20 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
-                            <img id="profilePicture" class="rounded-circle" src="../assets/img/users/itsakaseru.png" width="160px;" style="border: 5px solid #7E6BC4; border-style: outset;">
+                            <img id="profilePicture" class="rounded-circle" src="<?php echo $user->getPicture(); ?>" width="160px;" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
                             <div class="middle">
                                 <div class="text">Change Picture</div>
                             </div>
                         </div>
                         <div id="profileName" class="row justify-content-center mt-3 pl-3 pr-3" style="text-align: center;">
-                            Remueru Itsakaseru
+                            <?php echo $user->getFName() . " " . $user->getLName(); ?>
                         </div>
                         <hr style="border: 1px solid #B1B1B1">
                         <div class="profileDetail row justify-content-center">
-                            20 years old
+                            <?php echo $age->format('%y') ?> years old 
                         </div>
                         <div class="profileDetail row justify-content-center">
-                            727 total posts
+                            <?php echo $postCount ?> total posts
                         </div>
                         <div id="profileControl" class="row justify-content-center mt-4">
                             <a><i class="fas fa-edit"></i> edit profile</a>
@@ -107,58 +216,84 @@
 
                 <div class="row">
 
-                    <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
-                        <div class="row pl-3 d-flex">
-                            <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
-                                <img class="profilePicture rounded-circle" src="../assets/img/users/itsakaseru.png" width="50px;" style="border: 2px solid <?php echo $theme?>">
-                                <span class="postName ml-md-3 my-auto">Remueru Itsakaseru</span>
-                            </div>
-                            <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
-                                <span class="ml-auto mr-3">Apr, 14 2020</span>
-                            </div>
-                        </div>
-                        <div class="row pl-3 pt-3">
-                            <div class="col">
-                                KOKO DA YO~
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 pl-3 pt-3">
-                                <img class="img-fluid" src="../assets/img/web/cover-default.png" style="display: show;">
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="commentContainer row pl-md-3 mb-3">
-                            <div class="col-1 align-self-start d-flex">
-                                <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
-                            </div>
-                            <div class="col-11 d-flex pl-0 pl-md-3">
-                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
-                            </div>
-                        </div>
+                    <?php
 
-                        <div class="commentContainer row pl-md-3 mb-3">
-                            <div class="col-1 align-self-start d-flex">
-                                <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
-                            </div>
-                            <div class="col-11 d-flex pl-0 pl-md-3">
-                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
-                            </div>
-                        </div>
+                        include '../include/db_connect.php';
+                        include '../model/posts.php';
 
-                        <div class="replayContainer">
-                            <form class="col-12">
-                                <div class="row">
-                                    <div class="col-8 col-sm-9 col-md-10">
-                                        <textarea class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="reply something..."></textarea>
+                        // Get user Posts
+                        $query = "SELECT * from timeline WHERE userId = '" . $user->getUserId() . "';";
+                        $result = $db->query($query);
+
+                        // array to hold data
+                        $posts = array();
+                        $comments = array();
+
+                        while($data = mysqli_fetch_assoc($result)) {
+                            array_push($posts, new Post($data["userId"], $data["postId"], $data["contents"], $data["pic"], $data["timeStamp"]));
+                        }
+
+                        foreach($posts as $x) { ?>
+
+                            <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
+                                <div class="row pl-3 d-flex">
+                                    <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
+                                        <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>" width="50px;" style="border: 2px solid <?php echo $theme?>">
+                                        <span class="postName ml-md-3 my-auto"><?php echo $user->getFName() . " " . $user->getLName(); ?></span>
                                     </div>
-                                    <div class="col-4 col-sm-3 col-md-2">
-                                        <button class="commentBtn float-right" name="postContent" type="button" class="btn">comment</button>
+                                    <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
+                                        <span class="ml-auto mr-3"><?php echo getTimeAgo($x->getTime());?></span>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                    </div><!-- End of containerPost -->
+                                <div class="row pl-3 pt-3 mb-4">
+                                    <div class="col">
+                                        <?php echo $x->getContents(); ?>
+                                    </div>
+                                </div>
+                                <?php
+                                    if($x->getPic() != "null"){ ?>
+
+                                        <div class="row">
+                                            <div class="col-12 pl-3 pt-3">
+                                                <img class="img-fluid" src="../assets/img/web/cover-default.png" style="display: show;">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="commentContainer row pl-md-3 mb-3">
+                                            <div class="col-1 align-self-start d-flex">
+                                                <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
+                                            </div>
+                                            <div class="col-11 d-flex pl-0 pl-md-3">
+                                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="commentContainer row pl-md-3 mb-3">
+                                            <div class="col-1 align-self-start d-flex">
+                                                <img class="profilePicture rounded-circle" src="../assets/img/users/giovanna.png" width="50px;" style="border: 2px solid #7E6BC4">
+                                            </div>
+                                            <div class="col-11 d-flex pl-0 pl-md-3">
+                                                <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong>Hans Adhitio</strong> This is a text that will show anything in the comment section of this person original POST who play osu! some counter strike and arknights</span>
+                                            </div>
+                                        </div>
+
+                                <?php } ?>
+
+                                <div class="replayContainer">
+                                    <form class="col-12">
+                                        <div class="row">
+                                            <div class="col-8 col-sm-9 col-md-10">
+                                                <textarea class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="reply something..."></textarea>
+                                            </div>
+                                            <div class="col-4 col-sm-3 col-md-2">
+                                                <button class="commentBtn float-right" name="postContent" type="button" class="btn">comment</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>';
+                            
+                        <?php } ?>
 
                 </div><!-- End of x-list post -->
 
