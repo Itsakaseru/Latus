@@ -3,17 +3,29 @@
     // for profile pictures, the recommened size is 1024x1024 (user bewarned)
     // for profile cover, the recommened size is 1500x1000 (check if can) [need testing]
 
-    // get usersId
-    // ------
-
     // set target dir, file, ONLY ALLOW png, jpg--- 
     // make sure image file is less than 8mb ----
-    // 
+
+    include "../include/db_connect.php";
+
+    // Get userID from token
+    $token = $_COOKIE["latus-token"];
+
+    $query = "SELECT userId, email FROM user WHERE token = '" . $token . "';";
+    $result = $db->query($query);
+
+    if(mysqli_num_rows($result) == 1) {
+        $data = $result->fetch_assoc();
+        $userId = $data["userId"];
+        $userEmail = $data["email"];
+    } else {
+        echo "errFail";
+        exit();
+    }
 
     if(!empty($_FILES["file"])) {
 
-        $email = "getEmailFromDatabase" . "SjyChyalatusIncoporated";
-        $userId = 1;
+        $email = $userEmail . "SjyChyalatusIncoporated";
 
         $target_dir = "../assets/img/users/";
         $temp = explode(".", $_FILES["file"]["name"]);
@@ -52,8 +64,6 @@
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-
-                include "../include/db_connect.php";
 
                 $query = "UPDATE user SET pic = '" . $target_file . "' WHERE userId = '" . $userId . "';";
 
