@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+    background-color: #F3F3F3;
+    font-family: 'Roboto', sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile: */
+    .profilePicture {
+        display: none;
+    }
+}
+
+header {
+    height:10vh;
+    min-height:150px;
+}
+
+.hidden-spacer {
+    height: 56px
+}
+
+.navbar {
+    color: white;
+    background-color: transparent;
+    -webkit-transition: background-color 0.25s ease 0s;
+    transition: background-color 0.25s ease 0s;
+}
+
+.navbar a:link,
+.navbar a:visited,
+.navbar a:active {
+    color: white !important;
+    background-color: transparent !important;
+    text-decoration: none !important;
+}
+
+.navbar a:hover {
+    color: rgb(201, 201, 201) !important;
+    background-color: transparent !important;
+    text-decoration: none !important;
+}
+
+#accBtn {
+    color: white;
+    border-radius: 0.25rem;
+}
+
+#accBtn:focus {
+    color: black;
+    background-color: white;
+}
+
+#accBtn:hover {
+    color: black;
+    background-color: white;
+}
+
+#accBtn a:hover {
+    color: black !important;
+}
+
+#accImg {
+    border-radius: 5px;
+}
+
+.inputField input{
+    width: 100%;
+}
+
+.card {
+    border-radius: 8px;
+    border: 0 !important;
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
+}
+
+.userList {
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.userList:hover {
+    transform: scale(1.1);
+}
