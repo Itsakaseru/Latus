@@ -258,14 +258,14 @@
                                         </div>
                                     <?php } ?>
 
-                                <div class="replayContainer">
+                                <div class="replyContainer">
                                     <form class="col-12">
                                         <div class="row">
                                             <div class="col-8 col-sm-9 col-md-10">
-                                                <textarea class="inputField form-control" rows="1" name="content" maxlength="256" placeholder="reply something..."></textarea>
+                                                <textarea class="reply inputField form-control" rows="1" name="content" maxlength="256" placeholder="reply something..."></textarea>
                                             </div>
                                             <div class="col-4 col-sm-3 col-md-2">
-                                                <button class="commentBtn float-right" name="postContent" type="button" class="btn">comment</button>
+                                                <button class="commentBtn float-right" postId="<?php echo $x->getPostId(); ?>" type="button" class="btn">comment</button>
                                             </div>
                                         </div>
                                     </form>
@@ -368,6 +368,7 @@
 
 </body>
 <script>
+    
     $(document).ready(function() {
         // to enable solid background for navbar
         $(window).scroll(function() {
@@ -431,6 +432,26 @@
                 }
             });
         });
+
+        // Create Comment
+        $('.commentBtn').on('click', function() {
+            var comment = $(this).closest('.row').find('.reply').val();
+            var postId = $(this).attr('postId');
+            $.ajax({
+                url: '../controller/addComment.php',
+                method: "POST",
+                data: {
+                    postId: postId,
+                    comment: comment
+                },
+                success: function(data){
+                    console.log(data);
+                },
+                error: function() {
+                    alert("Something went wrong");
+                }
+            });
+        })
 
         // Change Profile Picture AJAX
         $('#uploadPP').on('click', function() {
