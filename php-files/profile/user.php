@@ -110,7 +110,7 @@
 <body id="profile">
     <header style="background-image: url('<?php echo $user->getCover(); ?>');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
-        <a href="/" class="navbar-brand">
+        <a href="../" class="navbar-brand">
             <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">

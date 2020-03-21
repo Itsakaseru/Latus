@@ -53,7 +53,7 @@
 <body id="profile">
     <header></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top solid">
-        <a href="/" class="navbar-brand">
+        <a href="" class="navbar-brand">
             <img src="assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
