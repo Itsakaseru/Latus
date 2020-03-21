@@ -94,6 +94,18 @@
         -webkit-transition: background-color 0.25s ease 0s;
         transition: background-color 0.25s ease 0s;
     }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+        
+    ::-webkit-scrollbar-track {
+        background: #ddd;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #<?php echo $user->getTheme(); ?>; 
+    }
 </style>
 
 <body id="profile">
@@ -108,10 +120,10 @@
         <div class="navbar-collapse collapse justify-content-stretch" id="navbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Discovery</a>
+                    <a class="nav-link" href="../">Discovery</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -122,9 +134,7 @@
                             <img id="accImg" src="<?php echo $user->getPicture(); ?>" alt="itsakaseru" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Profile</button>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item" type="button">Logout</button>
+                            <button id="logout" class="dropdown-item" type="button">Logout</button>
                         </div>
                     </div>
                 </li>
@@ -232,7 +242,7 @@
                                         <span class="ml-auto mr-3"><?php echo getTimeAgo($x->getTime());?></span>
                                     </div>
                                 </div>
-                                <div class="row pl-3 pt-3 mb-4">
+                                <div class="row pl-3 pt-3">
                                     <div class="col">
                                         <?php echo $x->getContents(); ?>
                                     </div>
@@ -242,7 +252,7 @@
 
                                         <div class="row">
                                             <div class="col-12 pl-3 pt-3">
-                                                <img class="img-fluid" src="../assets/img/web/cover-default.png" style="display: show;">
+                                                <img class="img-fluid" src="<?php echo $x->getPic(); ?>" style="display: show;">
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -401,8 +411,12 @@
                     color: color
                 },
                 success: function(data){
-                    console.log(data);
-                    //refresh page if success
+                    if(data == 'success') {
+                        location.reload();
+                    }
+                    else {
+                        alert(data);
+                    }
                 },
                 error: function() {
                     alert("Something went wrong");
@@ -425,7 +439,12 @@
                 data: form_data,                         
                 type: 'post',
                 success: function(data){
-                    console.log(data);
+                    if(data == 'success') {
+                        location.reload();
+                    }
+                    else {
+                        alert(data);
+                    }
                 },
                 error: function() {
                     alert("Something went wrong");
@@ -445,7 +464,12 @@
                     comment: comment
                 },
                 success: function(data){
-                    console.log(data);
+                    if(data == 'success') {
+                        location.reload();
+                    }
+                    else {
+                        alert(data);
+                    }
                 },
                 error: function() {
                     alert("Something went wrong");
@@ -468,8 +492,9 @@
                 type: 'post',
                 success: function(data){
                     if(data == 'success') {
-                        // refresh page
-                    } else {
+                        location.reload();
+                    }
+                    else {
                         alert(data);
                     }
                 },
@@ -493,7 +518,10 @@
                 type: 'post',
                 success: function(data){
                     if(data == 'success') {
-                        // refresh page
+                        location.reload();
+                    }
+                    else {
+                        alert(data);
                     }
                 },
                 error: function() {
@@ -501,6 +529,19 @@
                 }
             });
         });
+
+        $('#logout').on('click', function() {
+            $.ajax({
+                url: '../controller/logout.php',
+                method: "POST",
+                success: function(data){
+                    window.location.href = "../";
+                },
+                error: function() {
+                    alert("Something went wrong");
+                }
+            });
+        })
     });
 </script>
 
