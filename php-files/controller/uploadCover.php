@@ -76,7 +76,7 @@
 
                 include "../include/db_connect.php";
 
-                $query = "UPDATE user SET pic = '" . $target_file . "' WHERE userId = '" . $userId . "';";
+                $query = "UPDATE user SET cover = '" . $target_file . "' WHERE userId = '" . $userId . "';";
 
                 if ($db->query($query) === TRUE) {
                     echo "success";
