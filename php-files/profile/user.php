@@ -119,10 +119,10 @@
         <div class="navbar-collapse collapse justify-content-stretch" id="navbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="../profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Discovery</a>
+                    <a class="nav-link" href="../">Discovery</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -133,9 +133,7 @@
                             <img id="accImg" src="<?php echo $currentUser->getPicture(); ?>" alt="itsakaseru" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Profile</button>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item" type="button">Logout</button>
+                            <button id="logout" class="dropdown-item" type="button">Logout</button>
                         </div>
                     </div>
                 </li>
@@ -216,7 +214,7 @@
                                         <span class="ml-auto mr-3"><?php echo getTimeAgo($x->getTime());?></span>
                                     </div>
                                 </div>
-                                <div class="row pl-3 pt-3 mb-4">
+                                <div class="row pl-3 pt-3">
                                     <div class="col">
                                         <?php echo $x->getContents(); ?>
                                     </div>
@@ -292,7 +290,26 @@
                     comment: comment
                 },
                 success: function(data){
-                    console.log(data);
+                    if(data == 'success') {
+                        location.reload();
+                    }
+                    else {
+                        alert(data);
+                    }
+                },
+                error: function() {
+                    alert("Something went wrong");
+                }
+            });
+        })
+
+        // Logout
+        $('#logout').on('click', function() {
+            $.ajax({
+                url: '../controller/logout.php',
+                method: "POST",
+                success: function(data){
+                    window.location.href = "../";
                 },
                 error: function() {
                     alert("Something went wrong");
