@@ -26,7 +26,6 @@ body#register {
 
 .card {
     border-radius: 15px;
-    height: 54rem;
 }
 
 h2 {
@@ -35,16 +34,17 @@ h2 {
     color: #ACACAC;
 }
 
-#inputField {
+.inputField {
     background-color: #F3F3F3;
+    color: black;
     border: 0;
     font-family: 'Arial';
     font-size: 12pt;
-    padding: 25px 20px;
+    padding: 13px 20px;
     text-align: center;
 }
 
-#dateField {
+.dateField {
     background-color: #F3F3F3;
     border: 0;
     font-family: 'Arial';
@@ -54,7 +54,7 @@ h2 {
 }
 
 
-#genderField {
+.genderField {
     background-color: #F3F3F3;
     border: 0;
     font-family: 'Arial';
@@ -63,11 +63,11 @@ h2 {
     text-align: center;
 }
 
-#genderField .text {
+.genderField .text {
     color: black;
 }
 
-#inputField::-webkit-input-placeholder {
+.inputField::-webkit-input-placeholder {
     color: #ACACAC;
 }
 

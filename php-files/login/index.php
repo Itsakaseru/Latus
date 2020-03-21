@@ -11,85 +11,6 @@
     <!-- captcha v3 code -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        $('#loginForm').submit(function() {
-            return false;
-        });
-
-        function loginUser() {
-            $('#registerBtn').attr('disabled', true);
-            var verify = 0;
-
-            // hide messages
-            $('#cardContainer').css('height','30rem');
-            $('#alertBox').hide();
-            $('#userErr').hide();
-            $('#queryErr').hide();
-            $('#phpErr').hide();
-            $('#captchaFail').hide();
-
-            var username = $('#username').val();
-            var pw = $('#password').val();
-            var captchaBox = $('#recaptchaResponse').val();
-
-            if(captchaBox != '') {
-                if(username != '' && pw != '') {
-                    $.ajax({
-                        url: "../controller/login.php", // php controller location
-                        method: "POST",
-                        data: {
-                            username: username,
-                            password: pw,
-                            captchaBox: captchaBox
-                        },
-                        success: function(data) {
-                            if(data == "true") {
-                                verify = 1;
-                                window.location.href = "..";
-                            }
-                            else if(data == "queryError") {
-                                $('#cardContainer').css('height','35rem');
-                                $('#alertBox').show();
-                                $('#queryErr').show();
-                            }
-                            else if(data == "captchaError") {
-                                $('#cardContainer').css('height','35rem');
-                                $('#alertBox').show();
-                                $('#captchaFail').show();
-                            }
-                            else if(data == "userError" || data == "passError") {
-                                $('#cardContainer').css('height','35rem');
-                                $('#alertBox').show();
-                                $('#userErr').show();
-                            }
-                            else {
-                                $('#queryErr').show();
-                            }
-                        },
-                        error: function() {
-                            $('#cardContainer').css('height','35rem');
-                            $('#alertBox').show();
-                            $('#phpErr').show();
-                        }
-                    });
-                }
-                else {
-                    $('#cardContainer').css('height','35rem');
-                    $('#alertBox').show();
-                    $('#captchaFail').show();
-                }
-            }
-            else {
-                $('#cardContainer').css('height','35rem');
-                $('#alertBox').show();
-                $('#fieldsErr').show();
-            }
-
-            if(verify == 0) {
-                $('#registerBtn').attr('disabled', false);
-            }
-        }
-    </script>
 </head>
 
 <body id="login">
@@ -134,12 +55,90 @@
     </div>
 </body>
 <script>
-// captcha v3 code
-grecaptcha.ready(function() {
-    grecaptcha.execute('6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD', { action: 'registerUser' }).then(function (token) {
-        $('#recaptchaResponse').val(token); // enter token to hidden form input
+    // Google reCaptcha v3
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD', { action: 'registerUser' }).then(function (token) {
+            $('#recaptchaResponse').val(token); // enter token to hidden form input
+        });
     });
-});
+
+    $('#loginForm').submit(function() {
+        return false;
+    });
+
+    function loginUser() {
+        $('#registerBtn').attr('disabled', true);
+        var verify = 0;
+
+        // hide messages
+        $('#cardContainer').css('height','30rem');
+        $('#alertBox').hide();
+        $('#userErr').hide();
+        $('#queryErr').hide();
+        $('#phpErr').hide();
+        $('#captchaFail').hide();
+
+        var username = $('#username').val();
+        var pw = $('#password').val();
+        var captchaBox = $('#recaptchaResponse').val();
+
+        if(captchaBox != '') {
+            if(username != '' && pw != '') {
+                $.ajax({
+                    url: "../controller/login.php", // php controller location
+                    method: "POST",
+                    data: {
+                        username: username,
+                        password: pw,
+                        captchaBox: captchaBox
+                    },
+                    success: function(data) {
+                        if(data == "true") {
+                            verify = 1;
+                            window.location.href = "..";
+                        }
+                        else if(data == "queryError") {
+                            $('#cardContainer').css('height','35rem');
+                            $('#alertBox').show();
+                            $('#queryErr').show();
+                        }
+                        else if(data == "captchaError") {
+                            $('#cardContainer').css('height','35rem');
+                            $('#alertBox').show();
+                            $('#captchaFail').show();
+                        }
+                        else if(data == "userError" || data == "passError") {
+                            $('#cardContainer').css('height','35rem');
+                            $('#alertBox').show();
+                            $('#userErr').show();
+                        }
+                        else {
+                            $('#queryErr').show();
+                        }
+                    },
+                    error: function() {
+                        $('#cardContainer').css('height','35rem');
+                        $('#alertBox').show();
+                        $('#phpErr').show();
+                    }
+                });
+            }
+            else {
+                $('#cardContainer').css('height','35rem');
+                $('#alertBox').show();
+                $('#captchaFail').show();
+            }
+        }
+        else {
+            $('#cardContainer').css('height','35rem');
+            $('#alertBox').show();
+            $('#fieldsErr').show();
+        }
+
+        if(verify == 0) {
+            $('#registerBtn').attr('disabled', false);
+        }
+    }
 </script>
 
 </html>
