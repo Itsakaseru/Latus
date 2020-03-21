@@ -8,8 +8,9 @@
         private $_pic;
         private $_contents;
         private $_timeStamp;
+        private $_color;
 
-        function __construct($postId, $commenterId, $userId, $firstName, $lastName, $pic, $contents, $timeStamp) {
+        function __construct($postId, $commenterId, $userId, $firstName, $lastName, $pic, $contents, $timeStamp, $color) {
             $this->_postId = $postId;
             $this->_commenterId = $commenterId;
             $this->_userId = $userId;
@@ -18,6 +19,7 @@
             $this->_pic = $pic;
             $this->_contents = $contents;
             $this->_timeStamp = $timeStamp;
+            $this->_color = $color;
         }
 
         public function getPostId() { return $this->_postId; }
@@ -28,5 +30,6 @@
         public function getPic() { return $this->_pic; }
         public function getContent() { return $this->_contents; }
         public function getTime() { return $this->_timeStamp; }
+        public function getColor() { return $this->_color; }
     }
 ?>

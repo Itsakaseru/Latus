@@ -106,10 +106,18 @@
     ::-webkit-scrollbar-thumb {
         background: #<?php echo $user->getTheme(); ?>; 
     }
+    
+    #postBtn {
+        background-color: #<?php echo $user->getTheme(); ?>;
+    }
+
+    .commentBtn {
+        background-color: #<?php echo $user->getTheme(); ?>;
+    }
 </style>
 
 <body id="profile">
-    <header data-toggle="modal" data-target="#changeCover" style="background-image: url('<?php echo $user->getCover(); ?>');"></header>
+    <header data-toggle="modal" data-target="#changeCover" style="background-image: url('<?php echo $user->getCover(); ?>?<?php echo time(); ?>');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <a href="../" class="navbar-brand">
             <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
@@ -131,7 +139,7 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a><?php echo $user->getFName() . " " . $user->getLName(); ?> &nbsp;</a>
-                            <img id="accImg" src="<?php echo $user->getPicture(); ?>" alt="itsakaseru" width="30px">
+                            <img id="accImg" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button id="logout" class="dropdown-item" type="button">Logout</button>
@@ -148,7 +156,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
-                            <img id="profilePicture" class="rounded-circle" src="<?php echo $user->getPicture(); ?>" width="160px;" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
+                            <img id="profilePicture" class="rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="160px;" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
                             <div class="middle">
                                 <div class="text">Change Picture</div>
                             </div>
@@ -164,7 +172,7 @@
                             <?php echo $postCount ?> total posts
                         </div>
                         <div id="profileControl" class="row justify-content-center mt-4">
-                            <a data-toggle="modal" data-target="#editProfile"><i class="fas fa-edit"></i> edit profile</a>
+                            <a id="openEditProfile"><i class="fas fa-edit"></i> edit profile</a>
                         </div>
                     </div>
                 </div>
@@ -219,7 +227,7 @@
                                 $comments = array();
                                 
                                 // get Comments for user for each posts
-                                $query = "SELECT timeline.postId, comment.commenterId, user.userId, user.firstName, user.lastName, user.pic, comment.contents, comment.timeStamp
+                                $query = "SELECT timeline.postId, comment.commenterId, user.userId, user.firstName, user.lastName, user.pic, comment.contents, comment.timeStamp, user.theme
                                           FROM user
                                           INNER JOIN timeline
                                           INNER JOIN comment ON user.userId = comment.userId AND timeline.postId = comment.postId
@@ -227,7 +235,7 @@
                                 $result = $db->query($query);
 
                                 while($data = mysqli_fetch_assoc($result)) {
-                                    array_push($comments, new Comment($data["postId"], $data["commenterId"], $data["userId"], $data["firstName"], $data["lastName"], $data["pic"], $data["contents"], $data["timeStamp"]));
+                                    array_push($comments, new Comment($data["postId"], $data["commenterId"], $data["userId"], $data["firstName"], $data["lastName"], $data["pic"], $data["contents"], $data["timeStamp"], $data["theme"]));
                                 }
 
                             ?>
@@ -235,7 +243,7 @@
                             <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
                                 <div class="row pl-3 d-flex">
                                     <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
-                                        <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>" width="50px;" style="border: 2px solid <?php echo $theme?>">
+                                        <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="50px;" style="border: 2px solid <?php echo $theme?>">
                                         <span class="postName ml-md-3 my-auto"><strong><?php echo $user->getFName() . " " . $user->getLName(); ?></strong></span>
                                     </div>
                                     <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
@@ -252,7 +260,7 @@
 
                                         <div class="row">
                                             <div class="col-12 pl-3 pt-3">
-                                                <img class="img-fluid" src="<?php echo $x->getPic(); ?>" style="display: show;">
+                                                <img class="img-fluid" src="<?php echo $x->getPic(); ?>?<?php echo time(); ?>" style="display: show;">
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -260,7 +268,7 @@
                                     <?php foreach($comments as $y) { ?>
                                         <div class="commentContainer row pl-md-3 mb-3">
                                             <div class="col-1 align-self-start d-flex">
-                                                <img class="profilePicture rounded-circle" src="<?php echo $y->getPic(); ?>" width="50px;" style="border: 2px solid #<?php echo $user->getTheme();?>">
+                                                <img class="profilePicture rounded-circle" src="<?php echo $y->getPic(); ?>" width="50px;" style="border: 2px solid #<?php echo $y->getColor();?>">
                                             </div>
                                             <div class="col-11 d-flex pl-0 pl-md-3">
                                                 <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong><?php echo $y->getFName() . " " . $y->getLName();?></strong> <?php echo $y->getContent();?></span>
@@ -342,16 +350,24 @@
     <div class="modal fade" id="changePicture" tabindex="-1" role="dialog" aria-labelledby="changePicture" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Profile Picture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <form method="post" enctype="multipart/form-data">
                         Select image to upload:
                         <input id="profilePictureFile" type="file" name="fileToUpload">
-                        <input id="uploadPP" type="button" value="upload profile">
+                        <input id="uploadPP" type="button" value="Change Picture">
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                <div id="alertBox" class="alert alert-danger" style="display:none">
+                    <a id="errTypeImage" style="display:none;">Only .jpg, .jpeg, .png please~</a>
+                    <a id="errLarge" style="display:none;">Image size max. 8mb</a>
+                    <a id="errType" style="display:none;">This is not an image file</a>
+                    <a id="errFail" style="display:none;">Something went wrong</a>
                 </div>
             </div>
         </div>
@@ -361,16 +377,25 @@
     <div class="modal fade" id="changeCover" tabindex="-1" role="dialog" aria-labelledby="changeCover" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Profile Picture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <form method="post" enctype="multipart/form-data">
                         Select image to upload:
                         <input id="coverPictureFile" type="file" name="fileToUpload">
-                        <input id="uploadCP" type="button" value="upload cover">
+                        <input id="uploadCP" type="button" value="Change Cover">
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                <div id="alertBox2" class="alert alert-danger" style="display:none">
+                    <a id="errRes2" style="display:none;">Image must be 1500x1000 px!</a>
+                    <a id="errTypeImage2" style="display:none;">Only .jpg, .jpeg, .png please~</a>
+                    <a id="errLarge2" style="display:none;">Image size max. 8mb</a>
+                    <a id="errType2" style="display:none;">This is not an image file</a>
+                    <a id="errFail2" style="display:none;">Something went wrong</a>
                 </div>
             </div>
         </div>
@@ -391,6 +416,25 @@
 
         // enable auto sizing
         autosize($('textarea'));
+
+        $('#openEditProfile').click(function() {
+            $('#editProfile').modal('show');
+
+            var gender = '<?php echo $user->getGender(); ?>';
+            gender = gender.toLowerCase();
+            var color = '<?php echo $user->getTheme(); ?>';
+            color = color.toLowerCase();
+
+            if(gender = 'm') { $('[name=gender]').val('male'); }
+            if(gender = 'f') { $('[name=gender]').val('female'); }
+            if(gender = 'p') { $('[name=gender]').val('pnts'); }
+
+            if(color = '7e6bc4') { $('[name=colorScheme]').val('7E6BC4'); }
+            if(color = 'f34c4c') { $('[name=colorScheme]').val('F34C4C'); }
+            if(color = '8bcf64') { $('[name=colorScheme]').val('8BCF64'); }
+            if(color = '6ab1ef') { $('[name=colorScheme]').val('6AB1EF'); }
+            if(color = 'fc9f61') { $('[name=colorScheme]').val('FC9F61'); }
+        })
 
         // Update Profile
         $('#updateProfileBtn').click(function() {
@@ -479,12 +523,19 @@
 
         // Change Profile Picture AJAX
         $('#uploadPP').on('click', function() {
+
+            $('#alertBox').hide();
+            $('#errTypeImage').hide();
+            $('#errLarge').hide();
+            $('#errType').hide();
+            $('#errFail').hide();
+
             var file_data = $("#profilePictureFile").prop("files")[0];   
             var form_data = new FormData();
             form_data.append("file", file_data);
             $.ajax({
                 url: "../controller/uploadPicture.php",
-                dataType: 'script',
+                dataType: 'text',
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -494,8 +545,21 @@
                     if(data == 'success') {
                         location.reload();
                     }
+                    else if(data == 'errTypeImage') {
+                        $('#alertBox').show();
+                        $('#errTypeImage').show();
+                    }
+                    else if(data == 'errLarge') {
+                        $('#alertBox').show();
+                        $('#errLarge').show();
+                    }
+                    else if(data == 'errType') {
+                        $('#alertBox').show();
+                        $('#errType').show();
+                    }
                     else {
-                        alert(data);
+                        $('#alertBox').show();
+                        $('#errFail').show();
                     }
                 },
                 error: function() {
@@ -505,12 +569,20 @@
         });
 
         $('#uploadCP').on('click', function() {
+
+            $('#alertBox2').hide();
+            $('#errRes2').hide();
+            $('#errTypeImage2').hide();
+            $('#errLarge2').hide();
+            $('#errType2').hide();
+            $('#errFail2').hide();
+
             var file_data = $("#coverPictureFile").prop("files")[0];   
             var form_data = new FormData();
             form_data.append("file", file_data);
             $.ajax({
                 url: "../controller/uploadCover.php",
-                dataType: 'script',
+                dataType: 'text',
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -520,8 +592,25 @@
                     if(data == 'success') {
                         location.reload();
                     }
+                    else if(data == 'errTypeImage') {
+                        $('#alertBox2').show();
+                        $('#errTypeImage2').show();
+                    }
+                    else if(data == 'errLarge') {
+                        $('#alertBox2').show();
+                        $('#errLarge2').show();
+                    }
+                    else if(data == 'errType') {
+                        $('#alertBox2').show();
+                        $('#errType2').show();
+                    }
+                    else if(data == 'errRes') {
+                        $('#alertBox2').show();
+                        $('#errRes2').show();
+                    }
                     else {
-                        alert(data);
+                        $('#alertBox2').show();
+                        $('#errFail2').show();
                     }
                 },
                 error: function() {

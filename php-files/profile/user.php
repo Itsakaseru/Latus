@@ -105,10 +105,18 @@
         -webkit-transition: background-color 0.25s ease 0s;
         transition: background-color 0.25s ease 0s;
     }
+
+    #postBtn {
+        background-color: #<?php echo $user->getTheme(); ?>;
+    }
+
+    .commentBtn {
+        background-color: #<?php echo $user->getTheme(); ?>;
+    }
 </style>
 
 <body id="profile">
-    <header style="background-image: url('<?php echo $user->getCover(); ?>');"></header>
+    <header style="background-image: url('<?php echo $user->getCover(); ?>?<?php echo time(); ?>');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <a href="../" class="navbar-brand">
             <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
@@ -130,7 +138,7 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a><?php echo $currentUser->getFName() . " " . $currentUser->getLName(); ?> &nbsp;</a>
-                            <img id="accImg" src="<?php echo $currentUser->getPicture(); ?>" alt="itsakaseru" width="30px">
+                            <img id="accImg" src="<?php echo $currentUser->getPicture(); ?>?<?php echo time(); ?>" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button id="logout" class="dropdown-item" type="button">Logout</button>
@@ -147,7 +155,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
-                            <img id="profilePicture" class="rounded-circle" src="<?php echo $user->getPicture(); ?>" width="160px;" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
+                            <img id="profilePicture" class="rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="160px;" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
                         </div>
                         <div id="profileName" class="row justify-content-center mt-3 pl-3 pr-3" style="text-align: center;">
                             <?php echo $user->getFName() . " " . $user->getLName(); ?>
@@ -191,7 +199,7 @@
                                 $comments = array();
                                 
                                 // get Comments for user for each posts
-                                $query = "SELECT timeline.postId, comment.commenterId, user.userId, user.firstName, user.lastName, user.pic, comment.contents, comment.timeStamp
+                                $query = "SELECT timeline.postId, comment.commenterId, user.userId, user.firstName, user.lastName, user.pic, comment.contents, comment.timeStamp, user.theme
                                           FROM user
                                           INNER JOIN timeline
                                           INNER JOIN comment ON user.userId = comment.userId AND timeline.postId = comment.postId
@@ -199,7 +207,7 @@
                                 $result = $db->query($query);
 
                                 while($data = mysqli_fetch_assoc($result)) {
-                                    array_push($comments, new Comment($data["postId"], $data["commenterId"], $data["userId"], $data["firstName"], $data["lastName"], $data["pic"], $data["contents"], $data["timeStamp"]));
+                                    array_push($comments, new Comment($data["postId"], $data["commenterId"], $data["userId"], $data["firstName"], $data["lastName"], $data["pic"], $data["contents"], $data["timeStamp"], $data["theme"]));
                                 }
 
                             ?>
@@ -207,7 +215,7 @@
                             <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
                                 <div class="row pl-3 d-flex">
                                     <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
-                                        <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>" width="50px;" style="border: 2px solid <?php echo $theme?>">
+                                        <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="50px;" style="border: 2px solid <?php echo $theme?>">
                                         <span class="postName ml-md-3 my-auto"><strong><?php echo $user->getFName() . " " . $user->getLName(); ?></strong></span>
                                     </div>
                                     <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
@@ -224,7 +232,7 @@
 
                                         <div class="row">
                                             <div class="col-12 pl-3 pt-3">
-                                                <img class="img-fluid" src="../assets/img/web/cover-default.png" style="display: show;">
+                                                <img class="img-fluid" src="<?php echo $x->getPic(); ?>?<?php echo time(); ?>" style="display: show;">
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -232,7 +240,7 @@
                                     <?php foreach($comments as $y) { ?>
                                         <div class="commentContainer row pl-md-3 mb-3">
                                             <div class="col-1 align-self-start d-flex">
-                                                <img class="profilePicture rounded-circle" src="<?php echo $y->getPic(); ?>" width="50px;" style="border: 2px solid #<?php echo $user->getTheme();?>">
+                                                <img class="profilePicture rounded-circle" src="<?php echo $y->getPic(); ?>?<?php echo time(); ?>" width="50px;" style="border: 2px solid #<?php echo $y->getColor();?>">
                                             </div>
                                             <div class="col-11 d-flex pl-0 pl-md-3">
                                                 <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong><?php echo $y->getFName() . " " . $y->getLName();?></strong> <?php echo $y->getContent();?></span>

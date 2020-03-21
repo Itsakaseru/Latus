@@ -9,10 +9,13 @@
         // Get userID from token
         $token = $_SESSION["latus-token"];
 
-        $query = "SELECT userId FROM user WHERE token = '" . $token . "';";
-        $result = $db->query($query);
+        $query = $db->prepare("SELECT userId FROM user WHERE token = ?");
+        $query->bind_param("s", $token);
+        $query->execute();
 
-        if(mysqli_num_rows($result) == 1) {
+        $result = $query->get_result();
+
+        if($result->num_rows == 1) {
             $data = $result->fetch_assoc();
             $userId = $data["userId"];
         } else {
@@ -26,11 +29,12 @@
         $gender = $_POST["gender"];
         $color = $_POST["color"];
 
-        $query = "UPDATE user 
-                  SET firstName = '" . $firstName . "', lastName = '" . $lastName . "', birthDate = '" . $bdate . "', gender = '" . $gender . "', theme = '" . $color . "'
-                  WHERE userId = '" . $userId . "';";
+        $query = $db->prepare("UPDATE user 
+                               SET firstName = ?, lastName = ?, birthDate = ?, gender = ?, theme = ?
+                               WHERE userId = ?");
+        $query->bind_param("sssssi", $firstName, $lastName, $bdate, $gender, $color, $userId);
         
-        if ($db->query($query) === TRUE) {
+        if ($query->execute()) {
             echo "success";
         } else {
             echo $db->error;

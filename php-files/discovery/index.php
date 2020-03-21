@@ -73,7 +73,7 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a><?php echo $user->getFName() . " " . $user->getLName(); ?> &nbsp;</a>
-                            <img id="accImg" src="<?php echo substr($user->getPicture(), 3); ?>" alt="itsakaseru" width="30px">
+                            <img id="accImg" src="<?php echo substr($user->getPicture(), 3); ?>?<?php echo time(); ?>" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button id="logout" class="dropdown-item" type="button">Logout</button>
@@ -105,12 +105,12 @@
                 }
 
                 foreach(array_reverse($userList) as $x) { ?>
-                    <div class="col-3">
+                    <div class="col-lg-3">
                         <div id="profileInfo" class="col mr-lg-4 pb-md-5 p-md-0 mb-md-3 mb-5">
                             <div class="card userList" onclick="window.location='profile/user.php?id=<?php echo $x->getUserId() ?>';">
                                 <div class="card-body">
                                     <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
-                                        <img id="profilePicture" class="rounded-circle" src="<?php echo substr($x->getPicture(), 3); ?>" width="160px;" style="border: 5px solid #<?php echo $x->getTheme(); ?>; border-style: outset;">
+                                        <img id="profilePicture" class="rounded-circle" src="<?php echo substr($x->getPicture(), 3); ?>?<?php echo time(); ?>" width="160px;" style="border: 5px solid #<?php echo $x->getTheme(); ?>; border-style: outset;">
                                     </div>
                                     <div id="profileName" class="row justify-content-center mt-3 pl-3 pr-3" style="text-align: center;">
                                         <?php echo $x->getFName() . " " . $x->getLName(); ?>

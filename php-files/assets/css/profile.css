@@ -84,7 +84,6 @@ header {
 
 #postBtn {
     color: #FFFFFF;
-    background-color: #7E6BC4;
     border-radius: 8px;
     border: 0;
     padding: 7px 20px;
@@ -164,7 +163,6 @@ textarea::placeholder {
 
 .commentBtn {
     color: #FFFFFF;
-    background-color: #7E6BC4;
     border-radius: 8px;
     border: 0;
     padding: 10px 20px;

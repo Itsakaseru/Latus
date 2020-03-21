@@ -13,10 +13,13 @@
     // Get userID from token
     $token = $_SESSION["latus-token"];
 
-    $query = "SELECT userId, email FROM user WHERE token = '" . $token . "';";
-    $result = $db->query($query);
+    $query = $db->prepare("SELECT userId, email FROM user WHERE token = ?");
+    $query->bind_param("s", $token);
+    $query->execute();
 
-    if(mysqli_num_rows($result) == 1) {
+    $result = $query->get_result();
+
+    if($result->num_rows == 1) {
         $data = $result->fetch_assoc();
         $userId = $data["userId"];
         $userEmail = $data["email"];
@@ -50,23 +53,27 @@
             } else {
                 $uploadOk = 0;
                 echo "errRes";
+                exit();
             }
             
         } else {
             echo "errType";
             $uploadOk = 0;
+            exit();
         }
         
         // Check file size
         if ($_FILES["file"]["size"] > 8000000) {
             echo "errLarge";
             $uploadOk = 0;
+            exit();
         }
 
         // Allow certain file formats
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
             echo "errTypeImage";
             $uploadOk = 0;
+            exit();
         }
 
         // Check if $uploadOk is set to 0 by an error
@@ -78,9 +85,10 @@
 
                 include "../include/db_connect.php";
 
-                $query = "UPDATE user SET cover = '" . $target_file . "' WHERE userId = '" . $userId . "';";
+                $query = $db->prepare("UPDATE user SET cover = ? WHERE userId = ?");
+                $query->bind_param("si", $target_file, $userId);
 
-                if ($db->query($query) === TRUE) {
+                if ($query->execute()) {
                     echo "success";
                 } else {
                     echo "Error updating record: " . $conn->error;

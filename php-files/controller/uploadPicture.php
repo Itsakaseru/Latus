@@ -46,18 +46,21 @@
         } else {
             echo "errType";
             $uploadOk = 0;
+            exit();
         }
         
         // Check file size
         if ($_FILES["file"]["size"] > 8000000) {
             echo "errLarge";
             $uploadOk = 0;
+            exit();
         }
 
         // Allow certain file formats
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
             echo "errTypeImage";
             $uploadOk = 0;
+            exit();
         }
 
         // Check if $uploadOk is set to 0 by an error
