@@ -3,12 +3,12 @@
 
 <head>
     <title>Latus</title>
-    <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/discovery.css?ver=1.0.0">
-    <script src="../assets/jquery-3.4.1.js"></script>
-    <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/discovery.css?ver=1.0.0">
+    <script src="assets/jquery-3.4.1.js"></script>
+    <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a81849e810.js"></script>
-    <script src="../assets/autosize.min.js"></script>
+    <script src="assets/autosize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -22,10 +22,8 @@
 
 <?php
 
-    session_start();
-   
-    include "../include/db_connect.php"; 
-    include "../model/users.php";
+    include "include/db_connect.php"; 
+    include "model/users.php";
 
     $id; $token;
 
@@ -56,7 +54,7 @@
     <header></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top solid">
         <a href="/" class="navbar-brand">
-            <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
+            <img src="assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
             <span class="navbar-toggler-icon"></span>
@@ -64,10 +62,10 @@
         <div class="navbar-collapse collapse justify-content-stretch" id="navbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Discovery</a>
+                    <a class="nav-link" href="">Discovery</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -75,12 +73,10 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a><?php echo $user->getFName() . " " . $user->getLName(); ?> &nbsp;</a>
-                            <img id="accImg" src="<?php echo $user->getPicture(); ?>" alt="itsakaseru" width="30px">
+                            <img id="accImg" src="<?php echo substr($user->getPicture(), 3); ?>" alt="itsakaseru" width="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Profile</button>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item" type="button">Logout</button>
+                            <button id="logout" class="dropdown-item" type="button">Logout</button>
                         </div>
                     </div>
                 </li>
@@ -95,10 +91,10 @@
 
             <?php
 
-                include '../include/db_connect.php';
+                include 'include/db_connect.php';
 
                 // Get all users
-                $query = "SELECT * from user";
+                $query = "SELECT * from user WHERE NOT userId = '" . $user->getUserId() . "';";
                 $result = $db->query($query);
 
                 // Array to hold data
@@ -111,10 +107,10 @@
                 foreach(array_reverse($userList) as $x) { ?>
                     <div class="col-3">
                         <div id="profileInfo" class="col mr-lg-4 pb-md-5 p-md-0 mb-md-3 mb-5">
-                            <div class="card userList" onclick="window.location='../profile/user.php?id=<?php echo $x->getUserId() ?>';">
+                            <div class="card userList" onclick="window.location='profile/user.php?id=<?php echo $x->getUserId() ?>';">
                                 <div class="card-body">
                                     <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
-                                        <img id="profilePicture" class="rounded-circle" src="<?php echo $x->getPicture(); ?>" width="160px;" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
+                                        <img id="profilePicture" class="rounded-circle" src="<?php echo substr($x->getPicture(), 3); ?>" width="160px;" style="border: 5px solid #<?php echo $x->getTheme(); ?>; border-style: outset;">
                                     </div>
                                     <div id="profileName" class="row justify-content-center mt-3 pl-3 pr-3" style="text-align: center;">
                                         <?php echo $x->getFName() . " " . $x->getLName(); ?>
@@ -131,7 +127,20 @@
 
 </body>
 <script>
-
+    $(document).ready(function() {
+        $('#logout').on('click', function() {
+            $.ajax({
+                url: 'controller/logout.php',
+                method: "POST",
+                success: function(data){
+                    location.reload();
+                },
+                error: function() {
+                    alert("Something went wrong");
+                }
+            });
+        })
+    });
 </script>
 
 </html>
