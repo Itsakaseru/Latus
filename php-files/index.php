@@ -1,7 +1,6 @@
 <?php
     session_start();
-?>
-<?php
+
     include "include/db_connect.php";
 
     $query = "SELECT * FROM user";

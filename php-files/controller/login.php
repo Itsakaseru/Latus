@@ -1,19 +1,8 @@
 <?php
-    $captcha = $_POST['captchaBox'];
 
-    // $recaptcha = json_decode(file_get_contents());
-    /*
-    if (!function_exists('curl_init')){
-        die('CURL is not installed!');
-    }
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z" . "&response=" . $captcha);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $output = curl_exec($ch);
-    $result = json_decode($output);
-    curl_close($ch);
-    echo $result->score;
-    */
+    session_start();
+
+    $captcha = $_POST['captchaBox'];
 
     $recaptcha = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z"."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
     $result = json_decode($recaptcha);
@@ -25,11 +14,15 @@
         $username; $password;
         if(isset($_POST['username'])) $username = $_POST['username'];
         if(isset($_POST['password'])) $password = $_POST['password'];
+        if(isset($_POST['rememberme'])) $rememberme = $_POST['rememberme'];
 
-        $query = "SELECT * FROM user WHERE email='$username'";
-        $result = $db->query($query);
+        $query = $db->prepare("SELECT * FROM user WHERE email = ?");
+        $query->bind_param("s", $username);
+        $query->execute();
 
-        if(mysqli_num_rows($result) != 1) {
+        $result = $query->get_result();
+
+        if($result->num_rows != 1) {
             echo "userError";
         }
         else {
@@ -40,14 +33,25 @@
             if(hash("sha256", $password . $salt) == $hash) {
                 // set token, unknown whether will be used
                 $token = hash("sha256", rndStr(5));
-                $query = "UPDATE user SET token='$token' WHERE email='$username'";
+
+                $query = $db->prepare("UPDATE user SET token='$token' WHERE email = ?");
+                $query->bind_param("s", $username);
 
                 // fetch from other pages using latus-token cookie
-                if($db->query($query)) {
-                    // expire in 30 days
-                    $time = time() + (86400 * 30);
-                    setcookie("latus-userid", $user['userId'], $time, "/");
-                    setcookie("latus-token", $token, $time, "/");
+                if($query->execute()) {
+
+                    if($rememberme == 'true') {
+                        // expire in 30 days
+                        $time = time() + (86400 * 30);
+                        setcookie("latus-userid", $user['userId'], $time, "/");
+                        setcookie("latus-token", $token, $time, "/");
+                    }
+                    else if ($rememberme == 'false') {
+                        // expire when browser close
+                        $_SESSION["latus-userid"] = $user['userId'];
+                        $_SESSION["latus-token"] = $token;
+                    }
+                    
                     echo "true";
                 }
                 else echo "queryError";

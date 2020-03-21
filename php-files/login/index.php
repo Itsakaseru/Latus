@@ -16,7 +16,7 @@
 <body id="login">
     <div class="container h-100 justify-content-center">
         <div class="row h-100">
-            <div id="cardContainer" class="card mx-auto my-auto col-10 col-md-6 col-lg-4 col-xl-4 shadow" style="height: 30rem;">
+            <div id="cardContainer" class="card mx-auto my-auto col-10 col-md-6 col-lg-4 col-xl-4 shadow" style="height: 32rem;"> <!--30rem default before remember me-->
                 <div class="card-body">
                     <div class="row justify-content-center mt-4">
                         <img class="img-fluid" src="../assets/img/web/logo.svg" alt="Latus Logo" width="120px;">
@@ -36,11 +36,10 @@
                             <div class="form-group">
                                 <input id="password" class="inputField" name="password" type="password" class="form-control" placeholder="Password" maxlength="">
                             </div>
-                            <!-- captcha v2 code
-                            <div class="form-group">
-                                <div id="captchaBox" class="g-recaptcha" data-sitekey="6LchWeAUAAAAAOTVmEc-nL1i7Xrqsf51QpRq6oSS"></div>
-                            </div> -->
-                            <!-- used to retrieve token from captcha v3 -->
+                            <div class="form-check text-center">
+                                <input type="checkbox" class="form-check-input" id="rememberme">
+                                <label class="form-check-label" for="rememberme">Remember me for 30 days</label>
+                            </div>
                             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             <br>
                             <div class="form-group text-center">
@@ -71,7 +70,7 @@
         var verify = 0;
 
         // hide messages
-        $('#cardContainer').css('height','30rem');
+        $('#cardContainer').css('height','32rem');
         $('#alertBox').hide();
         $('#userErr').hide();
         $('#queryErr').hide();
@@ -81,6 +80,7 @@
         var username = $('#username').val();
         var pw = $('#password').val();
         var captchaBox = $('#recaptchaResponse').val();
+        var rememberme = $('#rememberme').is(":checked");
 
         if(captchaBox != '') {
             if(username != '' && pw != '') {
@@ -90,7 +90,8 @@
                     data: {
                         username: username,
                         password: pw,
-                        captchaBox: captchaBox
+                        captchaBox: captchaBox,
+                        rememberme: rememberme
                     },
                     success: function(data) {
                         if(data == "true") {
@@ -98,17 +99,17 @@
                             window.location.href = "..";
                         }
                         else if(data == "queryError") {
-                            $('#cardContainer').css('height','35rem');
+                            $('#cardContainer').css('height','37rem');
                             $('#alertBox').show();
                             $('#queryErr').show();
                         }
                         else if(data == "captchaError") {
-                            $('#cardContainer').css('height','35rem');
+                            $('#cardContainer').css('height','37rem');
                             $('#alertBox').show();
                             $('#captchaFail').show();
                         }
                         else if(data == "userError" || data == "passError") {
-                            $('#cardContainer').css('height','35rem');
+                            $('#cardContainer').css('height','37rem');
                             $('#alertBox').show();
                             $('#userErr').show();
                         }
@@ -117,20 +118,20 @@
                         }
                     },
                     error: function() {
-                        $('#cardContainer').css('height','35rem');
+                        $('#cardContainer').css('height','37rem');
                         $('#alertBox').show();
                         $('#phpErr').show();
                     }
                 });
             }
             else {
-                $('#cardContainer').css('height','35rem');
+                $('#cardContainer').css('height','37rem');
                 $('#alertBox').show();
                 $('#captchaFail').show();
             }
         }
         else {
-            $('#cardContainer').css('height','35rem');
+            $('#cardContainer').css('height','37rem');
             $('#alertBox').show();
             $('#fieldsErr').show();
         }
