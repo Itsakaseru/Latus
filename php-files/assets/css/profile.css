@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #F3F3F3;
     font-family: 'Roboto', sans-serif;
