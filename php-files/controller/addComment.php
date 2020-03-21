@@ -5,8 +5,10 @@
     
     include "../include/db_connect.php";
 
+    session_start();
+
     // Get User Token
-    $token = $_COOKIE["latus-token"];
+    $token = $_SESSION["latus-token"];
 
     // Get User ID from token
     $query = $db->prepare("SELECT userId FROM user WHERE token = ?");

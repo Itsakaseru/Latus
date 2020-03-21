@@ -6,10 +6,12 @@
     // set target dir, file, ONLY ALLOW png, jpg--- 
     // make sure image file is less than 8mb ----
 
+    session_start();
+
     include "../include/db_connect.php";
 
     // Get userID from token
-    $token = $_COOKIE["latus-token"];
+    $token = $_SESSION["latus-token"];
 
     $query = "SELECT userId, email FROM user WHERE token = '" . $token . "';";
     $result = $db->query($query);

@@ -2,10 +2,12 @@
 
     if(!empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["bdate"]) && !empty($_POST["gender"]) && !empty($_POST["color"])) {
         
+        session_start();
+
         include "../include/db_connect.php";
 
         // Get userID from token
-        $token = $_COOKIE["latus-token"];
+        $token = $_SESSION["latus-token"];
 
         $query = "SELECT userId FROM user WHERE token = '" . $token . "';";
         $result = $db->query($query);

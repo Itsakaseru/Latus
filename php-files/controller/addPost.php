@@ -2,6 +2,8 @@
 
     if(isset($_POST["content"])) {
 
+        session_start();
+
         //check if there are image want to be uploaded
         //--- if yes then set database image to link image location
         //--- if not then set database image to null
@@ -10,7 +12,7 @@
         include "../include/db_connect.php";
 
         // Get userID from token
-        $token = $_COOKIE["latus-token"];
+        $token = $_SESSION["latus-token"];
 
         $query = $db->prepare("SELECT userId FROM user WHERE token = ?");
         $query->bind_param("s", $token);
