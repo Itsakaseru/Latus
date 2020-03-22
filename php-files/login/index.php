@@ -9,6 +9,7 @@
     <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/favicon.ico"/>
 </head>
 
 <body id="login">
@@ -41,7 +42,7 @@
                             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             <br>
                             <div class="form-group text-center">
-                                <button id="loginBtn" name="login" type="button" onclick="loginUser()" class="btn">Login</button>
+                                <input id="loginBtn" name="login" type="submit" onclick="loginUser()" class="btn" value="Login">
                             </div>
                         </form>
                     </div>
@@ -74,6 +75,7 @@
         $('#queryErr').hide();
         $('#phpErr').hide();
         $('#captchaFail').hide();
+        $('#fieldsErr').hide();
 
         var username = $('#username').val();
         var pw = $('#password').val();
@@ -125,7 +127,7 @@
             else {
                 $('#cardContainer').css('height','37rem');
                 $('#alertBox').show();
-                $('#captchaFail').show();
+                $('#fieldsErr').show();
             }
         }
         else {

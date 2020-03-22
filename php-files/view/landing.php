@@ -8,8 +8,7 @@
     <script src="assets/jquery-3.4.1.js"></script>
     <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-    </script>
+    <link rel="shortcut icon" href="assets/favicon.ico"/>
 </head>
 
 <div class="jumbotron vertical-center mb-0">

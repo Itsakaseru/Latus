@@ -9,6 +9,7 @@
     <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/favicon.ico"/>
 </head>
 
 <body id="register">
@@ -64,7 +65,7 @@
                             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             <br>
                             <div class="form-group text-center mt-md-4 mt-lg-1 mt-sm-4">
-                                <button id="registerBtn" name="register" type="button" class="btn" onclick="registerUser()">Register</button>
+                                <input id="registerBtn" name="register" type="submit" class="btn" onclick="registerUser()" value="Register">
                             </div>
                         </form>
                     </div>

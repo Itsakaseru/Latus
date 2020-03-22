@@ -86,6 +86,7 @@
     <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a81849e810.js"></script>
     <script src="../assets/autosize.min.js"></script>
+    <link rel="shortcut icon" href="../assets/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <style>
