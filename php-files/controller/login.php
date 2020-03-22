@@ -1,36 +1,39 @@
 <?php
 
     session_start();
+    
+    include "../include/db_connect.php";
+    include "../include/randomstr.php";
 
-    $captcha = $_POST['captchaBox'];
+    $username; $password;
+    if(isset($_POST['username'])) $username = $_POST['username'];
+    if(isset($_POST['password'])) $password = $_POST['password'];
+    if(isset($_POST['rememberme'])) $rememberme = $_POST['rememberme'];
 
-    $recaptcha = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z"."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
-    $result = json_decode($recaptcha);
+    $query = $db->prepare("SELECT * FROM user WHERE email = ?");
+    $query->bind_param("s", $username);
+    $query->execute();
 
-    if($result->score >= 0.5) {
-        include "../include/db_connect.php";
-        include "../include/randomstr.php";
+    $result = $query->get_result();
 
-        $username; $password;
-        if(isset($_POST['username'])) $username = $_POST['username'];
-        if(isset($_POST['password'])) $password = $_POST['password'];
-        if(isset($_POST['rememberme'])) $rememberme = $_POST['rememberme'];
+    if($result->num_rows != 1) {
+        echo "userError";
+    }
+    else {
+        $user = $result->fetch_assoc();
+        $salt = $user['salt'];
+        $hash = $user['hash'];
 
-        $query = $db->prepare("SELECT * FROM user WHERE email = ?");
-        $query->bind_param("s", $username);
-        $query->execute();
+        mysqli_free_result($result);
 
-        $result = $query->get_result();
+        if(hash("sha256", $password . $salt) == $hash) {
 
-        if($result->num_rows != 1) {
-            echo "userError";
-        }
-        else {
-            $user = $result->fetch_assoc();
-            $salt = $user['salt'];
-            $hash = $user['hash'];
+            $captcha = $_POST['captchaBox'];
 
-            if(hash("sha256", $password . $salt) == $hash) {
+            $recaptcha = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LeBWeAUAAAAAIwgEHRhtj8hEG21YOm0QEhDI10Z"."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+            $result = json_decode($recaptcha);
+
+            if($result->score >= 0.5) {
                 // set token, unknown whether will be used
                 $token = hash("sha256", rndStr(5));
 
@@ -56,13 +59,13 @@
                 }
                 else echo "queryError";
             }
-            else echo "passError";
+            else {
+                echo "captchaError";
+            }
         }
+        else echo "passError";
+    }
 
-        mysqli_free_result($result);
-        mysqli_close($db);
-    }
-    else {
-        echo "captchaError";
-    }
+    mysqli_close($db);
+    
  ?>
