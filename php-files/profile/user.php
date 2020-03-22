@@ -1,25 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Latus</title>
-    <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/user.css?ver=1.0.0">
-    <script src="../assets/jquery-3.4.1.js"></script>
-    <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a81849e810.js"></script>
-    <script src="../assets/autosize.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<!--
-    PHP find users default theme color
-        -- set as variable
-    echo variable to css style below
-
-    users can choose pre-determined color to avoid conflict with font-color
--->
-
 <?php
 
     session_start();
@@ -35,18 +13,34 @@
     $id = $_GET["id"];
 
     // Get user to show
-    $query1 = "SELECT * FROM user WHERE userId='$id'";
-    $result = $db -> query($query1);
+    $query = $db->prepare("SELECT * FROM user WHERE userId = ?");
+    $query->bind_param("i", $id);
+    $query->execute();
 
-    $row = $result -> fetch_assoc(); 
+    $result = $query->get_result();
+
+    if($result->num_rows != 1) {
+        header('Location: ../404/');
+        exit();
+    }
+
+    $row = $result -> fetch_assoc();
 
     $user = new User($row["userId"], $row["firstName"], $row["lastName"], $row["email"], $row["birthDate"], $row["gender"], $row["pic"], $row["cover"], $row["theme"]);
 
     // Get currentUserData
-    $query1 = "SELECT * FROM user WHERE token='$token'";
-    $result = $db -> query($query1);
+    $query = $db->prepare("SELECT * FROM user WHERE token = ?");
+    $query->bind_param("s", $token);
+    $query->execute();
 
-    $row = $result -> fetch_assoc(); 
+    $result = $query->get_result();
+
+    if($result->num_rows != 1) {
+        header('Location: ../login/');
+        exit();
+    }
+
+    $row = $result -> fetch_assoc();
 
     $currentUser = new User($row["userId"], $row["firstName"], $row["lastName"], $row["email"], $row["birthDate"], $row["gender"], $row["pic"], $row["cover"], $row["theme"]);
 
@@ -99,6 +93,19 @@
     }
 
 ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Latus - <?php echo $user->getFName() . " " . $user->getLName(); ?></title>
+    <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/user.css?ver=1.0.0">
+    <script src="../assets/jquery-3.4.1.js"></script>
+    <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a81849e810.js"></script>
+    <script src="../assets/autosize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <style>
     .solid {
         background-color: #<?php echo $user->getTheme(); ?> !important;

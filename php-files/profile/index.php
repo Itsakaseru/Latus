@@ -1,25 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Latus</title>
-    <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/profile.css?ver=1.0.0">
-    <script src="../assets/jquery-3.4.1.js"></script>
-    <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a81849e810.js"></script>
-    <script src="../assets/autosize.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<!--
-    PHP find users default theme color
-        -- set as variable
-    echo variable to css style below
-
-    users can choose pre-determined color to avoid conflict with font-color
--->
-
 <?php
 
     session_start();
@@ -32,8 +10,17 @@
     if(isset($_SESSION['latus-userid'])) $id=$_SESSION['latus-userid'];
     if(isset($_SESSION['latus-token'])) $token=$_SESSION['latus-token'];
 
-    $query1 = "SELECT * FROM user WHERE token='$token'";
-    $result = $db -> query($query1);
+    // Get currentUserData
+    $query = $db->prepare("SELECT * FROM user WHERE token = ?");
+    $query->bind_param("s", $token);
+    $query->execute();
+
+    $result = $query->get_result();
+
+    if($result->num_rows != 1) {
+        header('Location: ../login/');
+        exit();
+    }
 
     $row = $result -> fetch_assoc(); 
 
@@ -88,6 +75,19 @@
     }
 
 ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Latus - <?php echo $user->getFName() . " " . $user->getLName(); ?></title>
+    <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/profile.css?ver=1.0.0">
+    <script src="../assets/jquery-3.4.1.js"></script>
+    <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a81849e810.js"></script>
+    <script src="../assets/autosize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <style>
     .solid {
         background-color: #<?php echo $user->getTheme(); ?> !important;
@@ -320,9 +320,9 @@
                             <label>Gender</label><br>
                             <select id="genderField" name="gender">
                                 <option class="text" value="null" style="color:#ACACAC;" disabled>Choose Gender</option>
-                                <option class="text" value="male">Male</option>
-                                <option class="text" value="female">Female</option>
-                                <option class="text" value="pnts">Prefer not to say</option>
+                                <option class="text" value="m">Male</option>
+                                <option class="text" value="f">Female</option>
+                                <option class="text" value="p">Prefer not to say</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -423,17 +423,16 @@
             var gender = '<?php echo $user->getGender(); ?>';
             gender = gender.toLowerCase();
             var color = '<?php echo $user->getTheme(); ?>';
-            color = color.toLowerCase();
 
-            if(gender = 'm') { $('[name=gender]').val('male'); }
-            if(gender = 'f') { $('[name=gender]').val('female'); }
-            if(gender = 'p') { $('[name=gender]').val('pnts'); }
+            if(gender == 'm') { $('[name=gender]').val('m'); }
+            if(gender == 'f') { $('[name=gender]').val('f'); }
+            if(gender == 'p') { $('[name=gender]').val('p'); }
 
-            if(color = '7e6bc4') { $('[name=colorScheme]').val('7E6BC4'); }
-            if(color = 'f34c4c') { $('[name=colorScheme]').val('F34C4C'); }
-            if(color = '8bcf64') { $('[name=colorScheme]').val('8BCF64'); }
-            if(color = '6ab1ef') { $('[name=colorScheme]').val('6AB1EF'); }
-            if(color = 'fc9f61') { $('[name=colorScheme]').val('FC9F61'); }
+            if(color == '7E6BC4') { $('[name=colorScheme]').val('7E6BC4'); }
+            if(color == 'F34C4C') { $('[name=colorScheme]').val('F34C4C'); }
+            if(color == '8BCF64') { $('[name=colorScheme]').val('8BCF64'); }
+            if(color == '6AB1EF') { $('[name=colorScheme]').val('6AB1EF'); }
+            if(color == 'FC9F61') { $('[name=colorScheme]').val('FC9F61'); }
         })
 
         // Update Profile

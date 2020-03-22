@@ -1,25 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Latus</title>
-    <link rel="stylesheet" href="assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/discovery.css?ver=1.0.0">
-    <script src="assets/jquery-3.4.1.js"></script>
-    <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a81849e810.js"></script>
-    <script src="assets/autosize.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<!--
-    PHP find users default theme color
-        -- set as variable
-    echo variable to css style below
-
-    users can choose pre-determined color to avoid conflict with font-color
--->
-
 <?php
 
     include "include/db_connect.php"; 
@@ -30,9 +8,17 @@
     if(isset($_SESSION['latus-userid'])) $id=$_SESSION['latus-userid'];
     if(isset($_SESSION['latus-token'])) $token=$_SESSION['latus-token'];
 
-    // Get currentUser to show
-    $query = "SELECT * FROM user WHERE token='$token'";
-    $result = $db -> query($query);
+    // Get currentUserData
+    $query = $db->prepare("SELECT * FROM user WHERE token = ?");
+    $query->bind_param("s", $token);
+    $query->execute();
+
+    $result = $query->get_result();
+
+    if($result->num_rows != 1) {
+        header('Location: ../login/');
+        exit();
+    }
 
     $row = $result -> fetch_assoc(); 
 
@@ -42,6 +28,19 @@
     mysqli_close($db);
 
 ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Latus - Discovery</title>
+    <link rel="stylesheet" href="assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/discovery.css?ver=1.0.0">
+    <script src="assets/jquery-3.4.1.js"></script>
+    <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a81849e810.js"></script>
+    <script src="assets/autosize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <style>
     .solid {
         background-color: #<?php echo $user->getTheme(); ?> !important;

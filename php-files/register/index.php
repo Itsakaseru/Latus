@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Latus</title>
+    <title>Latus - Register</title>
     <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/register.css?ver=1.0.0">
     <script src="../assets/jquery-3.4.1.js"></script>
@@ -22,6 +22,7 @@
                     <div class="row justify-content-center" style="margin-top: 3rem;">
                         <div id="alertBox" class="alert alert-danger" style="display:none">
                             <a id="fieldsErr" style="display: none;">All fields should not be empty.</a>
+                            <a id="userError" style="display: none;">Email is already taken!</a>
                             <a id="captchaFail" style="display: none;">Could not load reCAPTCHA. Please try again.</a>
                             <a id="retypeErr" style="display: none;">Password doesn't match.</a>
                             <a id="emailErr" style="display: none;">Email is not valid.</a>
@@ -55,9 +56,9 @@
                                 <label>Gender</label><br>
                                 <select id="genderField" class="genderField" name="gender">
                                     <option class="text" value="null" style="color:#ACACAC;" disabled selected>Choose Gender</option>
-                                    <option class="text" value="male">Male</option>
-                                    <option class="text" value="female">Female</option>
-                                    <option class="text" value="pnts">Prefer not to say</option>
+                                    <option class="text" value="m">Male</option>
+                                    <option class="text" value="f">Female</option>
+                                    <option class="text" value="p">Prefer not to say</option>
                                 </select>
                             </div>
                             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
@@ -165,6 +166,11 @@
                                 $('#cardContainer').css('height','57rem');
                                 $('#alertBox').show();
                                 $('#emailErr').show();
+                            }
+                            else if(data == "userError") {
+                                $('#cardContainer').css('height','57rem');
+                                $('#alertBox').show();
+                                $('#userError').show();
                             }
                             else {
                                 $('#cardContainer').css('height','57rem');
