@@ -33,7 +33,7 @@
                         <div id="successBox" class="alert alert-success" style="display:none">
                             <a id="successMsg" style="display: none;">Registration complete. Redirecting to login page.</a>
                         </div>
-                        <form id="registForm" onsubmit="return(false)">
+                        <form id="registForm" onsubmit="return(false)" method="post">
                             <div class="form-group">
                                 <input id="firstName" class="inputField" name="firstName" type="text" class="form-control" placeholder="First name" maxlength="">
                             </div>

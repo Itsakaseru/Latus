@@ -21,7 +21,7 @@
                         <img class="img-fluid" src="../assets/img/web/logo.svg" alt="Latus Logo" width="120px;">
                     </div>
                     <div class="row justify-content-center" style="margin-top: 3rem;">
-                        <form id="loginForm">
+                        <form id="loginForm" class="text-center" method="post">
                             <div id="alertBox" class="alert alert-danger" style="display:none">
                                 <a id="captchaErr" style="display:none;">Could not load reCAPTCHA. Please try again.</a>
                                 <a id="userErr" style="display:none;">Wrong email or password.</a>
