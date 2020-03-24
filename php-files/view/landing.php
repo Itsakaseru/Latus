@@ -4,7 +4,7 @@
 <head>
     <title>Latus</title>
     <link rel="stylesheet" href="assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/start.css?ver=1.0.0">
+    <link rel="stylesheet" href="assets/css/start.css?ver=1.0.1">
     <script src="assets/jquery-3.4.1.js"></script>
     <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -36,12 +36,16 @@ header {
     color: white !important;
     background-color: transparent !important;
     text-decoration: none !important;
+    -webkit-transition: color 0.25s ease 0s;
+    transition: color 0.25s ease 0s;
 }
 
 .navbar a:hover {
-    color: rgb(201, 201, 201) !important;
+    color: rgb(43, 43, 43) !important;
     background-color: transparent !important;
     text-decoration: none !important;
+    -webkit-transition: color 0.25s ease 0s;
+    transition: color 0.25s ease 0s;
 }
 
 #accBtn {

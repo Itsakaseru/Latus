@@ -36,6 +36,11 @@ body#login {
     padding: 10px 80px;
 }
 
+#loginBtn:hover {
+    background-color: rgb(155, 131, 240);
+    color: white;
+}
+
 footer {
     font-size: 12pt;
     text-align: center;

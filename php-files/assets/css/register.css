@@ -82,6 +82,12 @@ input[type="date"]::-webkit-clear-button { display: none; }
     padding: 10px 80px;
 }
 
+#registerBtn:hover {
+    background-color: rgb(155, 131, 240);
+    color: white;
+}
+
+
 #loginForm label {
     color: #ACACAC;
 }
