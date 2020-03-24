@@ -84,7 +84,7 @@
         </div>
     </nav>
     <div class="container text-center mb-5">
-        <h1>Discovers new "friends"!</h1>
+        <h1>Discover new "friends"!</h1>
     </div>
     <div class="container pt-5">
         <div class="row d-flex justify-content-around">
