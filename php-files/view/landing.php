@@ -9,6 +9,7 @@
     <script src="assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/favicon.ico"/>
+    <meta name="theme-color" content="#7E6BC4"/>
 </head>
 
 <div class="jumbotron vertical-center mb-0">

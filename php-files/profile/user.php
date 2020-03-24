@@ -106,6 +106,7 @@
     <script src="../assets/autosize.min.js"></script>
     <link rel="shortcut icon" href="../assets/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#<?php echo $user->getTheme(); ?>"/>
 </head>
 <style>
     .solid {

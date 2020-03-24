@@ -10,6 +10,7 @@
     <script src="https://www.google.com/recaptcha/api.js?render=6LeBWeAUAAAAAFIhxy6TeOdYJOCGK0hSNTpW1dKD"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/favicon.ico"/>
+    <meta name="theme-color" content="#7E6BC4"/>
 </head>
 
 <body id="login">
