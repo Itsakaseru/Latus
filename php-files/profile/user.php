@@ -61,7 +61,7 @@
 
     function getTimeAgo($timestamp) { 
 
-        date_default_timezone_set("Asia/Jakarta");
+        date_default_timezone_set("Etc/UTC"); // To match web server time
         $timeAgo = strtotime($timestamp);
         $diff = time() - $timeAgo; 
         
