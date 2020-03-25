@@ -23,7 +23,7 @@
                     </div>
                     <div class="row justify-content-center" style="margin-top: 3rem;">
                         <div id="alertBox" class="alert alert-danger" style="display:none">
-                            <a id="fieldsErr" style="display: none;">All fields should not be empty.</a>
+                            <a id="fieldsErr" style="display: none;">All fields should not be empty, except last name.</a>
                             <a id="userError" style="display: none;">Email is already taken!</a>
                             <a id="captchaFail" style="display: none;">Could not load reCAPTCHA. Please try again.</a>
                             <a id="retypeErr" style="display: none;">Password doesn't match.</a>
@@ -130,7 +130,7 @@
             checkDOB = 'false';
         }
 
-        if(fname != '' && lname != '' && email != '' && password != '' && checkDOB != 'false' && gender != 'null') {
+        if(fname != '' && email != '' && password != '' && checkDOB != 'false' && gender != 'null') {
             if(captchaBox != '') {
                 if(password == retype) {
                     $.ajax({
@@ -160,7 +160,7 @@
                                 $('#captchaFail').show();
                             }
                             else if(data == "empty") {
-                                $('#cardContainer').css('height','57rem');
+                                $('#cardContainer').css('height','58rem');
                                 $('#alertBox').show();
                                 $('#fieldsErr').show();
                             }
@@ -201,7 +201,7 @@
             }
         }
         else {
-            $('#cardContainer').css('height','57rem');
+            $('#cardContainer').css('height','58rem');
             $('#alertBox').show();
             $('#fieldsErr').show(); // show fieldsErr element
         }

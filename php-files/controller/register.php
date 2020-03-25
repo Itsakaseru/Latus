@@ -12,7 +12,7 @@
     if(isset($_POST['birthDate'])) $birthDate = $_POST['birthDate'];
     if(isset($_POST['gender'])) $gender = $_POST['gender'];
 
-    if($fname == '' || $lname == '' || $email == '' || $password == '' || $birthDate == '' || $gender == 'null') {
+    if($fname == '' || $email == '' || $password == '' || $birthDate == '' || $gender == 'null') {
         echo "empty";
         exit();
     } 

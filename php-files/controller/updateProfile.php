@@ -1,6 +1,6 @@
 <?php
 
-    if(!empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["bdate"]) && !empty($_POST["gender"]) && !empty($_POST["color"])) {
+    if(!empty($_POST["fname"]) && !empty($_POST["bdate"]) && !empty($_POST["gender"]) && !empty($_POST["color"])) {
         
         session_start();
 
@@ -42,7 +42,7 @@
 
     }
     else {
-        echo "errEmpty";
+        echo "All fields should not be empty, except last name!";
     }
 
 ?>
