@@ -11,6 +11,10 @@ body {
     .profilePicture {
         display: none;
     }
+    header {
+        background-size: initial !important;
+        background-position-x: center;
+    }
 }
 
 header {

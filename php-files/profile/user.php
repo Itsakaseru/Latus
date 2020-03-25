@@ -99,7 +99,7 @@
 <head>
     <title>Latus - <?php echo $user->getFName() . " " . $user->getLName(); ?></title>
     <link rel="stylesheet" href="../assets/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/user.css?ver=1.0.1">
+    <link rel="stylesheet" href="../assets/css/user.css?ver=1.0.2">
     <script src="../assets/jquery-3.4.1.js"></script>
     <script src="../assets/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a81849e810.js"></script>
