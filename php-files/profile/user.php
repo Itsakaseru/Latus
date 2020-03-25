@@ -249,7 +249,7 @@
                                     <?php foreach($comments as $y) { ?>
                                         <div class="commentContainer row pl-md-3 mb-3">
                                             <div class="col-1 align-self-start d-flex">
-                                                <img class="profilePicture rounded-circle" src="<?php echo $y->getPic(); ?>?<?php echo time(); ?>" width="50px" height="50px" style="border: 2px solid #<?php echo $y->getColor();?>">
+                                                <img class="profilePicture rounded-circle" src="<?php echo $y->getPic(); ?>?<?php echo time(); ?>" width="50px" style="border: 2px solid #<?php echo $y->getColor();?>">
                                             </div>
                                             <div class="col-11 d-flex pl-0 pl-md-3">
                                                 <span class="comment my-auto mr-4 mr-sm-3 ml-3 ml-sm-0"><strong><?php echo $y->getFName() . " " . $y->getLName();?></strong> <?php echo $y->getContent();?></span>
