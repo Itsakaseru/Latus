@@ -393,7 +393,7 @@
                     </form>
                 </div>
                 <div id="alertBox2" class="alert alert-danger" style="display:none">
-                    <a id="errRes2" style="display:none;">Image must be 1500x1000 px!</a>
+                    <a id="errRes2" style="display:none;">Image must be 1500x400 px!</a>
                     <a id="errTypeImage2" style="display:none;">Only .jpg, .jpeg, .png please~</a>
                     <a id="errLarge2" style="display:none;">Image size max. 8mb</a>
                     <a id="errType2" style="display:none;">This is not an image file</a>

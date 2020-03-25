@@ -14,17 +14,17 @@ body#login {
     border-radius: 15px;
 }
 
-.inputField {
+#inputField {
     background-color: #F3F3F3;
     color: black;
     border: 0;
     font-family: 'Arial';
     font-size: 12pt;
-    padding: 13px 20px;
+    padding: 25px 20px;
     text-align: center;
 }
 
-.inputField::-webkit-input-placeholder {
+#inputField::-webkit-input-placeholder {
     color: #ACACAC;
 }
 
@@ -34,11 +34,6 @@ body#login {
     color: white;
     font-family: 'Roboto', sans-serif;
     padding: 10px 80px;
-}
-
-#loginBtn:hover {
-    background-color: rgb(155, 131, 240);
-    color: white;
 }
 
 footer {

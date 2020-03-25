@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 html {
-    scroll-behavior: smooth;
+    height: 150%;
 }
 
 body {
@@ -10,22 +10,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-@media only screen and (max-width: 768px) {
-    /* For mobile: */
-    .profilePicture {
-        display: none;
-    }
-    header {
-        background-size: initial !important;
-        background-position-x: center;
-    }
-}
-
 header {
     height:10vh;
     min-height:400px;
     background-size:cover;
-    cursor: pointer;
+    background-image: url('/assets/img/web/cover-default.png');
 }
 
 .hidden-spacer {
@@ -39,22 +28,24 @@ header {
     transition: background-color 0.25s ease 0s;
 }
 
+.solid {
+    background-color: #7E6BC4 !important;
+    -webkit-transition: background-color 0.25s ease 0s;
+    transition: background-color 0.25s ease 0s;
+}
+
 .navbar a:link,
 .navbar a:visited,
 .navbar a:active {
     color: white !important;
     background-color: transparent !important;
     text-decoration: none !important;
-    -webkit-transition: color 0.25s ease 0s;
-    transition: color 0.25s ease 0s;
 }
 
 .navbar a:hover {
-    color: rgb(43, 43, 43) !important;
+    color: rgb(201, 201, 201) !important;
     background-color: transparent !important;
     text-decoration: none !important;
-    -webkit-transition: color 0.25s ease 0s;
-    transition: color 0.25s ease 0s;
 }
 
 #accBtn {
@@ -92,6 +83,7 @@ header {
 
 #postBtn {
     color: #FFFFFF;
+    background-color: #7E6BC4;
     border-radius: 8px;
     border: 0;
     padding: 7px 20px;
@@ -171,6 +163,7 @@ textarea::placeholder {
 
 .commentBtn {
     color: #FFFFFF;
+    background-color: #7E6BC4;
     border-radius: 8px;
     border: 0;
     padding: 10px 20px;

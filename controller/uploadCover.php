@@ -48,7 +48,7 @@
         $imageHeight = $check[1];
 
         if($check !== false) {
-            if($imageWidth == 1500 && $imageHeight == 1000) {
+            if($imageWidth == 1500 && $imageHeight == 400) {
                 $uploadOk = 1;
             } else {
                 $uploadOk = 0;

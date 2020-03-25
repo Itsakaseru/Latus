@@ -52,11 +52,6 @@ hr {
     padding: 12px 0px;
 }
 
-.btn:hover {
-    background-color: rgb(155, 131, 240);
-    color: white;
-}
-
 footer {
     color: #ACACAC;
 }
