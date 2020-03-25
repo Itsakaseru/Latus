@@ -55,7 +55,7 @@
     <header></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top solid">
         <a href="" class="navbar-brand">
-            <img src="assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
+            <img src="assets/img/web/logo-small.svg" alt="Latus Logo" width="30px">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
             <span class="navbar-toggler-icon"></span>
@@ -74,7 +74,7 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a><?php echo $user->getFName() . " " . $user->getLName(); ?> &nbsp;</a>
-                            <img id="accImg" src="<?php echo substr($user->getPicture(), 3); ?>?<?php echo time(); ?>" width="30px">
+                            <img id="accImg" src="<?php echo substr($user->getPicture(), 3); ?>?<?php echo time(); ?>" width="30px" height="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button id="logout" class="dropdown-item" type="button">Logout</button>
@@ -111,7 +111,7 @@
                             <div class="card userList" onclick="window.location='profile/user.php?id=<?php echo $x->getUserId() ?>';">
                                 <div class="card-body">
                                     <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
-                                        <img id="profilePicture" class="rounded-circle" src="<?php echo substr($x->getPicture(), 3); ?>?<?php echo time(); ?>" width="160px;" style="border: 5px solid #<?php echo $x->getTheme(); ?>; border-style: outset;">
+                                        <img id="profilePicture" class="rounded-circle" src="<?php echo substr($x->getPicture(), 3); ?>?<?php echo time(); ?>" width="160px" height="160px" style="border: 5px solid #<?php echo $x->getTheme(); ?>; border-style: outset;">
                                     </div>
                                     <div id="profileName" class="row justify-content-center mt-3 pl-3 pr-3" style="text-align: center;">
                                         <?php echo $x->getFName() . " " . $x->getLName(); ?>

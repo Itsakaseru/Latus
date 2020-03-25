@@ -122,7 +122,7 @@
     <header data-toggle="modal" data-target="#changeCover" style="background-image: url('<?php echo $user->getCover(); ?>?<?php echo time(); ?>');"></header>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <a href="../" class="navbar-brand">
-            <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px;">
+            <img src="../assets/img/web/logo-small.svg" alt="Latus Logo" width="30px">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
             <span class="navbar-toggler-icon"></span>
@@ -141,7 +141,7 @@
                     <div class="btn-group">
                         <button id="accBtn" type="button" class="btn d-flex align-items-center justify-content-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <a><?php echo $user->getFName() . " " . $user->getLName(); ?> &nbsp;</a>
-                            <img id="accImg" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="30px">
+                            <img id="accImg" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="30px" height="30px">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button id="logout" class="dropdown-item" type="button">Logout</button>
@@ -158,7 +158,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="profileImage" class="row justify-content-center" data-toggle="modal" data-target="#changePicture">
-                            <img id="profilePicture" class="rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="160px;" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
+                            <img id="profilePicture" class="rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="160px" height="160px" style="border: 5px solid #<?php echo $user->getTheme(); ?>; border-style: outset;">
                             <div class="middle">
                                 <div class="text">Change Picture</div>
                             </div>
@@ -245,7 +245,7 @@
                             <div class="containerPost card col-lg-12 pt-3 pb-3 mb-5">
                                 <div class="row pl-3 d-flex">
                                     <div class="col-5 col-sm-7 col-md-9 align-self-start d-flex">
-                                        <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="50px;" style="border: 2px solid <?php echo $theme?>">
+                                        <img class="profilePicture rounded-circle" src="<?php echo $user->getPicture(); ?>?<?php echo time(); ?>" width="50px" height="50px" style="border: 2px solid <?php echo $theme?>">
                                         <span class="postName ml-md-3 my-auto"><strong><?php echo $user->getFName() . " " . $user->getLName(); ?></strong></span>
                                     </div>
                                     <div class="col-7 col-sm-5 col-md-3 my-auto d-flex">
