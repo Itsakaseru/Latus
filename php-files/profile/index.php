@@ -261,7 +261,7 @@
                                     if($x->getPic() != "null"){ ?>
 
                                         <div class="row">
-                                            <div class="col-12 pl-3 pt-3">
+                                            <div class="col-12 pl-3 pt-3 d-flex justify-content-center">
                                                 <img class="img-fluid" src="<?php echo $x->getPic(); ?>?<?php echo time(); ?>" style="display: show;">
                                             </div>
                                         </div>
